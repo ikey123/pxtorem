@@ -1,0 +1,46 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-rgb: 255, 255, 255;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-rgb: 17, 24, 39;
+  }
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: rgb(var(--background-rgb));
+}
+
+@layer components {
+  .container {
+    @apply px-4 mx-auto max-w-7xl;
+  }
+}
+
+/* 基础排版样式 */
+h1, h2, h3, h4, h5, h6 {
+  @apply font-semibold;
+}
+
+/* 标题和段落之间的间距 */
+h1 + p, h2 + p, h3 + p, h4 + p, h5 + p, h6 + p {
+  @apply mt-2;
+}
+
+/* 滚动行为 */
+html {
+  scroll-behavior: smooth;
+}
+
+/* 链接悬停效果 */
+a {
+  @apply transition-colors duration-200;
+} 

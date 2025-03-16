@@ -1,0 +1,92 @@
+{
+  "common": {
+    "title": "PX to REM Converter - Free CSS Unit Tool",
+    "description": "Instantly convert PX to REM for free. Optimize your responsive web design with our accurate CSS unit converter.",
+    "startConverting": "Start Converting",
+    "copy": "Copy",
+    "copied": "Copied!",
+    "details": "Details",
+    "notFound": "Page Not Found",
+    "goHome": "Go back home",
+    "about": "About",
+    "contact": "Contact"
+  },
+  "nav": {
+    "home": "Home",
+    "pxToRem": "PX to REM",
+    "remToPx": "REM to PX",
+    "pxToEm": "PX to EM (Coming Soon)",
+    "remToEm": "REM to EM (Coming Soon)",
+    "about": "About",
+    "contact": "Contact"
+  },
+  "converter": {
+    "inputPlaceholder": "Enter value",
+    "from": "From",
+    "to": "To",
+    "rootFontSize": "Root Font Size",
+    "result": "{value} {from} = {result} {to}",
+    "calculation": "Calculation: {formula}",
+    "copy": "Copy"
+  },
+  "home": {
+    "hero": {
+      "title": "PX to REM Converter",
+      "subtitle": "Fast and accurate CSS unit conversions for responsive design"
+    },
+    "popular": {
+      "title": "Popular Conversions",
+      "viewMore": "View More"
+    },
+    "about": {
+      "whatIsRem": {
+        "title": "What are PX and REM?",
+        "content": "PX (pixel) is a fixed unit, while REM (root em) is relative to the root element's font size, typically 16px by default in most browsers."
+      },
+      "whyUseRem": {
+        "title": "Why use REM?",
+        "content": "REM units are ideal for creating accessible, responsive designs that scale proportionally when users change their browser's font size."
+      },
+      "howToUse": {
+        "title": "How to use REM in CSS",
+        "content": "Define the root font size on the html element, then use rem units for font sizes, margins, padding, and other properties."
+      }
+    }
+  },
+  "footer": {
+    "popularLinks": "Popular Conversions",
+    "contact": "Contact",
+    "language": "Language",
+    "copyright": "© {year} pxtorem.org. All rights reserved."
+  },
+  "about": {
+    "title": "About PX to REM Converter",
+    "subtitle": "Learn about our free tool for converting between CSS units",
+    "mission": "Our Mission",
+    "missionText": "At pxtorem.org, our mission is to provide web developers and designers with simple, reliable tools that make responsive web design easier.",
+    "whyBuilt": "Why We Built This Tool",
+    "whyBuiltText": "Converting between pixels and REM units is a common task in modern web development. While the calculation is simple, having a dedicated tool saves time and reduces errors."
+  },
+  "contact": {
+    "title": "Contact Us",
+    "subtitle": "We'd love to hear from you! Send us your questions or feedback.",
+    "form": {
+      "name": "Your Name",
+      "email": "Email Address",
+      "subject": "Subject",
+      "message": "Message",
+      "send": "Send Message"
+    },
+    "otherWays": "Other Ways to Reach Us",
+    "email": "Email: contact@pxtorem.org",
+    "twitter": "Twitter: @pxtoremconverter",
+    "github": "GitHub: github.com/pxtorem"
+  },
+  "Index": {
+    "title": "PX to REM Converter",
+    "description": "Convert between PX and REM units easily"
+  },
+  "LocaleLayout": {
+    "title": "PX to REM - {locale}"
+  }
+} 
