@@ -1,0 +1,37 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- 背景使用渐变色 -->
+  <rect width="512" height="512" rx="96" fill="url(#gradient)"/>
+  
+  <g filter="url(#shadow)">
+    <!-- 中央图形元素 - 简化的单位转换符号 -->
+    <circle cx="256" cy="256" r="140" stroke="white" stroke-width="24" stroke-opacity="0.2" fill="none"/>
+    <circle cx="256" cy="256" r="140" stroke="white" stroke-width="24" stroke-dasharray="439,439" stroke-dashoffset="110" fill="none"/>
+    
+    <!-- 中央文字 -->
+    <text x="256" y="220" text-anchor="middle" fill="white" font-family="Arial" font-weight="bold" font-size="70">
+      CSS
+    </text>
+    
+    <!-- 底部文字 -->
+    <text x="256" y="290" text-anchor="middle" fill="white" font-family="Arial" font-weight="bold" font-size="60">
+      UNITS
+    </text>
+    
+    <!-- 转换箭头符号 -->
+    <path d="M180 340L220 340L200 370L180 340Z" fill="white"/>
+    <path d="M332 340L292 340L312 370L332 340Z" fill="white"/>
+    <line x1="220" y1="355" x2="292" y2="355" stroke="white" stroke-width="12" stroke-linecap="round"/>
+  </g>
+  
+  <!-- 定义渐变和阴影 -->
+  <defs>
+    <linearGradient id="gradient" x1="0" y1="0" x2="512" y2="512" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#4F46E5"/>
+      <stop offset="1" stop-color="#3B82F6"/>
+    </linearGradient>
+    
+    <filter id="shadow" x="-4" y="-4" width="520" height="520">
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+</svg>

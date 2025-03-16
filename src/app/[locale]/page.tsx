@@ -1,4 +1,4 @@
-import { Metadata } from 'next';
+import { Metadata, Viewport } from 'next';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import { getTranslations } from 'next-intl/server';
@@ -6,8 +6,25 @@ import Converter from '@/components/converter/Converter';
 import PopularConversions from '@/components/home/PopularConversions';
 import FeatureSection from '@/components/home/FeatureSection';
 
-export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
-  const t = await getTranslations({ locale: params.locale, namespace: 'common' });
+export async function generateViewport({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Viewport> {
+  const { locale } = await params;
+  return {
+    width: "device-width",
+    initialScale: 1,
+  };
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: 'common' });
   
   return {
     title: t('title'),
@@ -15,7 +32,7 @@ export async function generateMetadata({ params }: { params: { locale: string } 
   };
 }
 
-export default function Home() {
+export default function Home({ children }: { children: React.ReactNode }) {
   // 分别获取不同命名空间的翻译函数
   const t = useTranslations('common');
   const homeT = useTranslations('home');
@@ -107,4 +124,4 @@ export default function Home() {
       </section>
     </main>
   );
-} 
+}

@@ -19,6 +19,7 @@
     "framer-motion": "^10.12.16",
     "next": "^15.2.2",
     "next-intl": "latest",
+    "png-to-ico": "^2.1.8",
     "react": "latest",
     "react-dom": "latest",
     "typescript": "5.1.3"

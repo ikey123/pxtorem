@@ -2,6 +2,7 @@
   "common": {
     "title": "Conversor de PX a REM - Herramienta CSS Gratuita",
     "description": "Convierte PX a REM al instante gratis. Optimiza tu diseño web responsive con nuestro convertidor de unidades CSS preciso.",
+    "slugTitle": "Conversión de {slug} ({category})",
     "startConverting": "Comenzar a Convertir",
     "copy": "Copiar",
     "copied": "¡Copiado!",
@@ -87,5 +88,11 @@
   },
   "LocaleLayout": {
     "title": "PX a REM - {locale}"
-  }
+  },
+  "Category": {
+      "title": "{category} Converter"
+    },
+    "Slug": {
+      "title": "{slug} Conversion ({category})"
+    }
 } 

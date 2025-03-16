@@ -1,24 +1,32 @@
-import { Metadata } from 'next';
-import { getTranslator } from 'next-intl/server';
+import { Metadata, Viewport } from 'next';
+import { getTranslations } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import Converter from '@/components/converter/Converter';
 import RelatedConversions from '@/components/slug/RelatedConversions';
 
 type SlugParams = {
-  params: {
-    locale: string;
-    category: string;
-    slug: string;
-  };
+  params: Promise<{ locale: string; category: string; slug: string }>;
 };
 
+export async function generateViewport({
+  params,
+}: SlugParams): Promise<Viewport> {
+  const { locale } = await params;
+  return {
+    width: "device-width",
+    initialScale: 1,
+  };
+}
+
 export async function generateMetadata({ params }: SlugParams): Promise<Metadata> {
-  const { locale, category, slug } = params;
+  const { locale, category, slug } = await params;
   
   // 验证类别
   if (category !== 'px-to-rem' && category !== 'rem-to-px') {
     return notFound();
   }
+  
+  const t = await getTranslations({ locale, namespace: 'common' });
   
   // 解析slug
   let title = '';
@@ -46,7 +54,7 @@ export async function generateMetadata({ params }: SlugParams): Promise<Metadata
   }
   
   return {
-    title,
+    title: t('slugTitle', { slug, category }),
     description,
     alternates: {
       languages: {
@@ -57,8 +65,8 @@ export async function generateMetadata({ params }: SlugParams): Promise<Metadata
   };
 }
 
-export default function SlugPage({ params }: SlugParams) {
-  const { category, slug } = params;
+export default async function SlugPage({ params }: SlugParams) {
+  const { locale, category, slug } = await params;
   
   // 验证类别
   if (category !== 'px-to-rem' && category !== 'rem-to-px') {
@@ -85,6 +93,8 @@ export default function SlugPage({ params }: SlugParams) {
     initialFromUnit = 'rem';
     initialToUnit = 'px';
   }
+  
+  const t = await getTranslations({ locale, namespace: 'Slug' });
   
   return (
     <main>

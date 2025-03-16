@@ -1,26 +1,23 @@
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import { getTranslator } from 'next-intl/server';
+import { getTranslations } from 'next-intl/server';
 import Converter from '@/components/converter/Converter';
 import CategoryIntro from '@/components/category/CategoryIntro';
 import ConversionTable from '@/components/category/ConversionTable';
 
 type CategoryParams = {
-  params: {
-    locale: string;
-    category: string;
-  };
+  params: Promise<{ locale: string; category: string }>;
 };
 
 export async function generateMetadata({ params }: CategoryParams): Promise<Metadata> {
-  const { locale, category } = params;
+  const { locale, category } = await params;
   
   // 验证类别
   if (category !== 'px-to-rem' && category !== 'rem-to-px') {
     return notFound();
   }
   
-  const t = await getTranslator(locale, 'common');
+  const t = await getTranslations({ locale, namespace: 'Category' });
   
   const title = category === 'px-to-rem' 
     ? 'PX to REM Converter - Free CSS Unit Tool'
@@ -42,8 +39,8 @@ export async function generateMetadata({ params }: CategoryParams): Promise<Meta
   };
 }
 
-export default function CategoryPage({ params }: CategoryParams) {
-  const { category } = params;
+export default async function CategoryPage({ params }: CategoryParams) {
+  const { locale, category } = await params;
   
   // 验证类别
   if (category !== 'px-to-rem' && category !== 'rem-to-px') {
