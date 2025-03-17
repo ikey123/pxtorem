@@ -15,7 +15,7 @@ export async function generateMetadata({
   params 
 }: CategoryParams): Promise<Metadata> {
   try {
-    const { locale, category } = params;
+    const { locale, category } = await params;
     
     console.log(`generateMetadata - 语言: ${locale}, 类别: ${category}`);
     
@@ -61,7 +61,7 @@ export default async function CategoryPage({
   params 
 }: CategoryParams) {
   try {
-    const { locale, category } = params;
+    const { locale, category } = await params;
     
     console.log(`CategoryPage - 语言: ${locale}, 类别: ${category}`);
     

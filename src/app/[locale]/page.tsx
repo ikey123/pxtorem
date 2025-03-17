@@ -29,7 +29,7 @@ export async function generateMetadata({
   params 
 }: PageParams): Promise<Metadata> {
   try {
-    const { locale } = params;
+    const { locale } = await params;
     
     // 检查是否误将类别识别为语言
     if (validCategories.includes(locale)) {
@@ -68,7 +68,7 @@ export default async function Home({
   params
 }: PageParams) {
   try {
-    const { locale } = params;
+    const { locale } = await params;
     
     console.log(`Home - 原始语言: ${locale}, 解析后语言: ${locales.includes(locale) ? locale : defaultLocale}`);
     

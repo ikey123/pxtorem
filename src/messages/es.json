@@ -94,7 +94,9 @@
       "title": "{category} Converter"
     },
     "Slug": {
-      "title": "{slug} Conversion ({category})"
+      "metaTitle": "{category} - {slug}",
+      "metaDescription": "Convierta {category} con valor {slug}",
+      "title": "Conversor de {category} - {slug}"
     },
     "NotFound": {
       "title": "404 - Página No Encontrada",

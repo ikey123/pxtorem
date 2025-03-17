@@ -12,7 +12,8 @@ export async function generateMetadata({
   params 
 }: SlugParams): Promise<Metadata> {
   try {
-  const { locale, category, slug } = params;
+    // 添加 await 关键字
+    const { locale, category, slug } = await params;
     
     // 使用有效的语言或默认回退
     const effectiveLocale = locales.includes(locale) ? locale : defaultLocale;
@@ -25,13 +26,22 @@ export async function generateMetadata({
       };
     }
     
-    // 获取翻译
-    const t = await getTranslations({ locale: effectiveLocale, namespace: "Slug" });
-  
-  return {
-      title: t("metaTitle", { slug, category }),
-      description: t("metaDescription", { slug, category }),
-    };
+    // 添加错误处理，防止缺失翻译导致的错误
+    try {
+      const t = await getTranslations({ locale: effectiveLocale, namespace: "Slug" });
+      
+      return {
+        title: t("metaTitle", { slug, category }),
+        description: t("metaDescription", { slug, category }),
+      };
+    } catch (error) {
+      console.error("翻译错误:", error);
+      // 缺失翻译时的回退内容
+      return {
+        title: `${category.toUpperCase()} - ${slug}`,
+        description: `Convert ${category} units with value ${slug}`,
+      };
+    }
   } catch (error) {
     console.error("Error in generateMetadata:", error);
     return {
@@ -45,7 +55,8 @@ export default async function SlugPage({
   params 
 }: SlugParams) {
   try {
-    const { locale, category, slug } = params;
+    // 添加 await 关键字
+    const { locale, category, slug } = await params;
     
     console.log(`SlugPage - 语言: ${locale}, 类别: ${category}, Slug: ${slug}`);
     
@@ -91,25 +102,38 @@ export default async function SlugPage({
       );
     }
     
-    // 获取翻译
-    const t = await getTranslations({ locale: effectiveLocale, namespace: "Slug" });
-    const title = t("title", { slug, category });
-    
-    // 渲染转换器组件
-    return <SlugContent 
-             locale={effectiveLocale} 
-             category={category} 
-             slug={slug} 
-             title={title}
-             initialValue={value} 
-           />;
+    // 获取翻译时添加错误处理
+    try {
+      const t = await getTranslations({ locale: effectiveLocale, namespace: "Slug" });
+      const title = t("title", { slug, category });
+      
+      // 渲染转换器组件
+      return <SlugContent 
+               locale={effectiveLocale} 
+               category={category} 
+               slug={slug} 
+               title={title}
+               initialValue={value} 
+             />;
+    } catch (error) {
+      console.error("翻译错误:", error);
+      // 缺失翻译时的回退内容
+      const fallbackTitle = `${category.toUpperCase()} - ${slug}`;
+      return <SlugContent 
+               locale={effectiveLocale} 
+               category={category} 
+               slug={slug} 
+               title={fallbackTitle}
+               initialValue={value} 
+             />;
+    }
   } catch (error) {
     console.error("Error in SlugPage:", error);
     return (
       <div className="container mx-auto px-4 py-8">
         <h1 className="text-3xl font-bold mb-6">加载错误</h1>
         <p className="mb-6">抱歉，加载页面时发生错误，请稍后再试。</p>
-        </div>
-  );
-} 
+      </div>
+    );
+  }
 }
