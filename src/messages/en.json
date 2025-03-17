@@ -95,5 +95,10 @@
     },
     "Slug": {
       "title": "{slug} Conversion ({category})"
+    },
+    "NotFound": {
+      "title": "404 - Page Not Found",
+      "message": "Sorry, the page you requested does not exist.",
+      "back": "Back to Home"
     }
 } 

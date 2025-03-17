@@ -1,80 +1,69 @@
+// src/app/[locale]/layout.tsx
 import './globals.css';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
-import { notFound } from 'next/navigation';
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
-import { locales } from '@/i18n/request';
-import { Viewport } from 'next';
+import { locales, defaultLocale } from '@/i18n/request';
+import { inter } from '@/app/fonts';
 
-// 加载字体
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
   title: {
     default: 'PX to REM Converter - Free CSS Unit Tool',
-    template: '%s | PX to REM Converter'
+    template: '%s | PX to REM Converter',
   },
   description: 'Instantly convert PX to REM for free. Optimize your responsive web design with our accurate CSS unit converter.',
-  icons: {
-    icon: [
-      { url: '/favicon.ico', sizes: '32x32' },
-      { url: '/icons/icon-16.png', sizes: '16x16' },
-      { url: '/icons/icon-32.png', sizes: '32x32' },
-      { url: '/icons/icon-48.png', sizes: '48x48' },
-      { url: '/icons/icon-64.png', sizes: '64x64' },
-      { url: '/icons/icon-96.png', sizes: '96x96' },
-      { url: '/icons/icon-128.png', sizes: '128x128' },
-      { url: '/icons/icon-192.png', sizes: '192x192' },
-      { url: '/icons/icon-256.png', sizes: '256x256' },
-      { url: '/icons/icon-512.png', sizes: '512x512' },
-    ],
-    apple: [
-      { url: '/icons/apple-icon.png', sizes: '180x180' },
-    ],
-    shortcut: '/favicon.ico',
-  },
 };
 
-export const viewport: Viewport = {
-  width: 'device-width',
-  initialScale: 1,
-};
-
-export function generateStaticParams() {
-  return locales.map((locale) => ({ locale }));
-}
-
-export default async function LocaleLayout({ params, children }: { params: { locale: string }; children: React.ReactNode }) {
-  const { locale } = await params;
-  
-  // 验证语言
-  if (!locales.includes(locale as any)) {
-    notFound();
-  }
-
-  let messages;
+export default async function LocaleLayout({
+  params,
+  children,
+}: {
+  params: { locale: string };
+  children: React.ReactNode;
+}) {
   try {
-    messages = (await import(`../../messages/${locale}.json`)).default;
+    const { locale: rawLocale } = params;
+    const locale = rawLocale && locales.includes(rawLocale) ? rawLocale : defaultLocale;
+    
+    console.log(`Layout - 原始语言: ${rawLocale}, 解析后语言: ${locale}`);
+    
+    // 加载消息
+    const messages = await getMessages({ locale }).catch((error) => {
+      console.error(`无法加载语言 ${locale} 的翻译: ${error.message}`);
+      return import(`../../messages/${defaultLocale}.json`).then((mod) => mod.default);
+    });
+    
+    return (
+      <html lang={locale} className="scroll-smooth">
+        <body className={inter.className}>
+          <NextIntlClientProvider locale={locale} messages={messages}>
+            <div className="min-h-screen flex flex-col">
+              <Header />
+              <main className="flex-grow">{children}</main>
+              <Footer />
+            </div>
+          </NextIntlClientProvider>
+        </body>
+      </html>
+    );
   } catch (error) {
-    notFound();
-  }
-
-  return (
-    <html lang={locale} className="scroll-smooth">
-      <body className={inter.className}>
-        <NextIntlClientProvider locale={locale} messages={messages}>
-          <div className="min-h-screen flex flex-col">
-            <Header />
-            <main className="flex-grow">
-              {children}
-            </main>
-            <Footer />
+    console.error("Layout 错误:", error);
+    return (
+      <html lang={defaultLocale}>
+        <body className={inter.className}>
+          <div className="flex justify-center items-center min-h-screen">
+            <div className="p-8 bg-red-50 rounded-lg border border-red-200">
+              <h1 className="text-2xl font-bold text-red-600 mb-2">出错了</h1>
+              <p className="text-red-500">加载页面时发生错误，请稍后再试。</p>
+            </div>
           </div>
-        </NextIntlClientProvider>
-      </body>
-    </html>
-  );
+        </body>
+      </html>
+    );
+  }
 }

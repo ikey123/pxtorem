@@ -27,7 +27,8 @@
     "to": "A",
     "rootFontSize": "Tamaño de Fuente Raíz",
     "result": "{value} {from} = {result} {to}",
-    "calculation": "Cálculo: {formula}"
+    "calculation": "Cálculo: {formula}",
+    "copy": "Copiar" 
   },
   "home": {
     "hero": {
@@ -94,5 +95,10 @@
     },
     "Slug": {
       "title": "{slug} Conversion ({category})"
+    },
+    "NotFound": {
+      "title": "404 - Página No Encontrada",
+      "message": "Lo sentimos, la página solicitada no existe.",
+      "back": "Volver al Inicio"
     }
 } 
