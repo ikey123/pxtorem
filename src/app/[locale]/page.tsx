@@ -6,18 +6,16 @@ import Converter from '@/components/converter/Converter';
 import PopularConversions from '@/components/home/PopularConversions';
 import FeatureSection from '@/components/home/FeatureSection';
 import { notFound, redirect } from "next/navigation";
-import { locales, defaultLocale, validCategories } from "@/i18n/request";
+import { locales, defaultLocale } from "@/i18n/request";
 import HomeContent from "@/components/home/HomeContent";
 
 type PageParams = {
-  params: { locale: string };
+  params: Promise<{ locale: string }>;
 };
 
 export async function generateViewport({
   params,
-}: {
-  params: Promise<{ locale: string }>;
-}): Promise<Viewport> {
+}: PageParams): Promise<Viewport> {
   const { locale } = await params;
   return {
     width: "device-width",
@@ -31,23 +29,10 @@ export async function generateMetadata({
   try {
     const { locale } = await params;
     
-    // 检查是否误将类别识别为语言
-    if (validCategories.includes(locale)) {
-      console.warn(`类别被误识别为语言 in generateMetadata: ${locale}`);
-      return {
-        title: "PX to REM Converter",
-        description: "Convert between PX and REM units",
-      };
-    }
-    
     // 使用有效的语言或默认回退
     const effectiveLocale = locales.includes(locale) ? locale : defaultLocale;
     
-    if (locale !== effectiveLocale) {
-      console.warn(`非标准语言 in generateMetadata: ${locale}, 使用 ${effectiveLocale}`);
-    }
-    
-    // 获取翻译 - 需要 await
+    // 获取翻译
     const t = await getTranslations({ locale: effectiveLocale, namespace: "common" });
     
     return {

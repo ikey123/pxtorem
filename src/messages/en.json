@@ -91,14 +91,16 @@
     "title": "PX to REM - {locale}"
   },
   "Category": {
-      "title": "{category} Converter"
-    },
-    "Slug": {
-      "title": "{slug} Conversion ({category})"
-    },
-    "NotFound": {
-      "title": "404 - Page Not Found",
-      "message": "Sorry, the page you requested does not exist.",
-      "back": "Back to Home"
-    }
+    "title": "{category} Conversion Tool"
+  },
+  "Slug": {
+    "metaTitle": "{category} - {slug} Conversion Tool",
+    "metaDescription": "Online tool to convert {slug} from {category} to REM units",
+    "title": "{category} Conversion: {slug}"
+  },
+  "NotFound": {
+    "title": "404 - Page Not Found",
+    "message": "Sorry, the page you requested does not exist.",
+    "back": "Back to Home"
+  }
 } 

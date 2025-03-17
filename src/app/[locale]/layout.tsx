@@ -1,15 +1,11 @@
-// src/app/[locale]/layout.tsx
 import './globals.css';
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import { locales, defaultLocale } from '@/i18n/request';
 import { inter } from '@/app/fonts';
-
-const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
   title: {
@@ -23,16 +19,15 @@ export default async function LocaleLayout({
   params,
   children,
 }: {
-  params: { locale: string };
+  params: Promise<{ locale: string }>;  // 修改为 Promise 类型
   children: React.ReactNode;
 }) {
   try {
-    const { locale: rawLocale } = params;
+    const { locale: rawLocale } = await params;  // 添加 await
     const locale = rawLocale && locales.includes(rawLocale) ? rawLocale : defaultLocale;
     
     console.log(`Layout - 原始语言: ${rawLocale}, 解析后语言: ${locale}`);
     
-    // 加载消息
     const messages = await getMessages({ locale }).catch((error) => {
       console.error(`无法加载语言 ${locale} 的翻译: ${error.message}`);
       return import(`../../messages/${defaultLocale}.json`).then((mod) => mod.default);

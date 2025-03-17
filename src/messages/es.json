@@ -1,16 +1,7 @@
 {
   "common": {
-    "title": "Conversor de PX a REM - Herramienta CSS Gratuita",
-    "description": "Convierte PX a REM al instante gratis. Optimiza tu diseño web responsive con nuestro convertidor de unidades CSS preciso.",
-    "slugTitle": "Conversión de {slug} ({category})",
-    "startConverting": "Comenzar a Convertir",
-    "copy": "Copiar",
-    "copied": "¡Copiado!",
-    "details": "Detalles",
-    "notFound": "Página No Encontrada",
-    "goHome": "Volver al inicio",
-    "about": "Acerca de",
-    "contact": "Contacto"
+    "title": "Conversor de PX a REM",
+    "description": "Convierta fácilmente entre unidades PX y REM"
   },
   "nav": {
     "home": "Inicio",
@@ -91,16 +82,18 @@
     "title": "PX a REM - {locale}"
   },
   "Category": {
-      "title": "{category} Converter"
-    },
-    "Slug": {
-      "metaTitle": "{category} - {slug}",
-      "metaDescription": "Convierta {category} con valor {slug}",
-      "title": "Conversor de {category} - {slug}"
-    },
-    "NotFound": {
-      "title": "404 - Página No Encontrada",
-      "message": "Lo sentimos, la página solicitada no existe.",
-      "back": "Volver al Inicio"
-    }
+    "metaTitle": "{category} Conversor",
+    "metaDescription": "Convierta unidades {category} fácilmente",
+    "title": "Conversor de {category}"
+  },
+  "Slug": {
+    "metaTitle": "{category} - {slug}",
+    "metaDescription": "Convierta {category} con valor {slug}",
+    "title": "Conversor de {category} - {slug}"
+  },
+  "NotFound": {
+    "title": "404 - Página No Encontrada",
+    "message": "Lo sentimos, la página solicitada no existe.",
+    "back": "Volver al Inicio"
+  }
 } 

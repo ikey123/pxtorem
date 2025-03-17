@@ -1,4 +1,3 @@
-// src/app/[locale]/not-found.tsx
 import Link from 'next/link';
 import { defaultLocale } from '@/i18n/request';
 

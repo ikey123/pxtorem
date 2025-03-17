@@ -1,29 +1,24 @@
-import createNextIntlPlugin from 'next-intl/plugin';
+// next.config.js
+import withNextIntl from 'next-intl/plugin';
 
-// 指定配置文件路径
-const withNextIntl = createNextIntlPlugin('./src/i18n/request.ts');
+// 配置 next-intl
+const nextIntlConfig = withNextIntl('./src/i18n/request.ts');
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  //swcMinify: true,
   
-  // 重定向
+  // 移除 experimental.middleware
+  
+  // 禁用默认重定向，让中间件处理
   async redirects() {
-    return [
-      {
-        source: '/',
-        destination: '/en', // 指定重定向的目标路径
-        permanent: true,
-      },
-    ];
+    return [];
   },
   
-  // 图像优化
+  // 图像优化配置
   images: {
     domains: ['pxtorem.org'],
   },
-}
+};
 
-// 使用 export default 而不是 module.exports
-export default withNextIntl(nextConfig); 
+export default nextIntlConfig(nextConfig);
