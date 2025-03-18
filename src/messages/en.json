@@ -91,7 +91,9 @@
     "title": "PX to REM - {locale}"
   },
   "Category": {
-    "title": "{category} Conversion Tool"
+    "title": "{category} Conversion Tool",
+    "metaTitle": "Category: {category}",
+    "metaDescription": "Description for category {category}"
   },
   "Slug": {
     "metaTitle": "{category} - {slug} Conversion Tool",
