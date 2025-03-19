@@ -51,6 +51,8 @@ export default function Converter({
       setFormula(getPxToRemFormula(numericValue, rootFontSize));
     } else if (fromUnit === 'rem' && toUnit === 'px') {
       setFormula(getRemToPxFormula(numericValue, rootFontSize));
+    } else {
+      setFormula(''); // 同单位无公式
     }
   }, [value, fromUnit, toUnit, rootFontSize]);
   

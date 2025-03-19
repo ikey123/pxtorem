@@ -15,8 +15,14 @@ export default function CategoryContent({
   title: string;
 }) {
   // 动态设置单位
-  const fromUnit = category === "px-to-rem" ? "px" : category === "px-to-em" ? "px" : "em" || "rem";
-  const toUnit = category === "px-to-rem" ? "rem" : category === "px-to-em" ? "em" : "px";
+  const fromUnit = category === "px-to-rem" ? "px" 
+    : category === "px-to-em" ? "px" 
+    : category === "em-to-px" ? "em" 
+    : "rem"; // 默认 rem 用于 rem-to-px
+  const toUnit = category === "px-to-rem" ? "rem" 
+    : category === "px-to-em" ? "em" 
+    : category === "em-to-px" ? "px" 
+    : "px"; // 默认 px 用于 rem-to-px
 
   // 常见转换值，基于假设的 em-to-px 关键词调研
   const commonValues = category === "em-to-px"
@@ -50,7 +56,10 @@ export default function CategoryContent({
       <section className="py-10">
         <div className="container mx-auto px-4">
           <h1 className="text-3xl font-bold text-gray-900 mb-6">
-            {category === "em-to-px" ? "EM to PX Converter" : category === "px-to-em" ? "PX to EM Converter" : category === "px-to-rem" ? "PX to REM Converter" : "REM to PX Converter"}
+            {category === "em-to-px" ? "EM to PX Converter" 
+              : category === "px-to-em" ? "PX to EM Converter" 
+              : category === "px-to-rem" ? "PX to REM Converter" 
+              : "REM to PX Converter"}
           </h1>
           <p className="mb-6 max-w-3xl">
             {category === "em-to-px"
@@ -61,7 +70,11 @@ export default function CategoryContent({
               ? "Easily convert PX to REM with our free online PX to REM converter. Perfect for responsive web design, this tool helps you transform pixel values into scalable REM units."
               : "Instantly convert REM to PX with our free REM to PX converter. Designed for developers and designers, this tool provides accurate pixel values from REM units."}
           </p>
-          <Converter initialFromUnit={fromUnit as "px" | "rem" | "em"} initialToUnit={toUnit as "px" | "rem" | "em"} locale={locale} />
+          <Converter 
+            initialFromUnit={fromUnit as "px" | "rem" | "em"} 
+            initialToUnit={toUnit as "px" | "rem" | "em"} 
+            locale={locale} 
+          />
         </div>
       </section>
 

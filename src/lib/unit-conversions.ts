@@ -29,28 +29,18 @@ export function getRemToPxFormula(rem: number, rootFontSize: number = 16): strin
 // 格式化转换结果
 export function formatConversionResult(
   value: number,
-  fromUnit: 'px' | 'rem',
-  toUnit: 'px' | 'rem',
-  rootFontSize: number = 16
+  fromUnit: "px" | "rem",
+  toUnit: "px" | "rem",
+  base: number = rootFontSize
 ): string {
-  if (fromUnit === 'px' && toUnit === 'rem') {
-    const result = pxToRem(value, rootFontSize);
-    return result.toFixed(4).replace(/\.?0+$/, '');
-  } else if (fromUnit === 'rem' && toUnit === 'px') {
-    const result = remToPx(value, rootFontSize);
-    return result.toFixed(0);
+  if (fromUnit === toUnit) return value.toString();
+
+  if (fromUnit === "px" && toUnit === "rem") {
+    return pxToRem(value, base).toFixed(4).replace(/\.?0+$/, "");
+  } else if (fromUnit === "rem" && toUnit === "px") {
+    return remToPx(value, base).toFixed(0);
   }
   return value.toString();
-}
-
-// 二期功能
-export function pxToEm(px: number, base = rootFontSize): number {
-  return px / base;
-}
-
-// 二期功能
-export function emToPx(em: number, base = rootFontSize): number {
-  return em * base;
 }
 
 // 格式化数字，去除末尾多余的零

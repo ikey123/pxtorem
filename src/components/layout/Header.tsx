@@ -13,7 +13,7 @@ export default function Header() {
   const popularTools = [
     { name: 'PX to REM', path: '/px-to-rem' },
     { name: 'REM to PX', path: '/rem-to-px' },
-    { name: 'EM to PX', path: '/em-to-px' },
+    // { name: 'EM to PX', path: '/em-to-px' }, // 隐藏 EM to PX
   ];
 
   return (
