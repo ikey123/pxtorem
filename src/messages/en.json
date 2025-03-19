@@ -92,8 +92,8 @@
   },
   "Category": {
     "title": "{category} Conversion Tool",
-    "metaTitle": "Category: {category}",
-    "metaDescription": "Description for category {category}"
+    "metaTitle": "{category} Converter - Free CSS Unit Tool",
+    "metaDescription": "Convert {category} units with our free online tool."
   },
   "Slug": {
     "metaTitle": "{category} - {slug} Conversion Tool",

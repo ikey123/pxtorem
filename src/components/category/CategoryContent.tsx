@@ -1,21 +1,47 @@
 "use client";
 
 import Converter from "@/components/converter/Converter";
+import CategoryIntro from "@/components/category/CategoryIntro";
+import ConversionTable from "@/components/category/ConversionTable";
 
-export default function CategoryContent({ 
-  locale, 
-  category, 
-  title 
-}: { 
-  locale: string; 
-  category: string; 
+export default function CategoryContent({
+  locale,
+  category,
+  title,
+}: {
+  locale: string;
+  category: string;
   title: string;
 }) {
+  const fromUnit = category === "px-to-rem" ? "px" : "rem";
+  const toUnit = category === "px-to-rem" ? "rem" : "px";
+
   return (
-    <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-6">{title}</h1>
-      <p className="mb-6">请选择一个具体的转换值，或使用下面的转换器：</p>
-      <Converter initialCategory={category} locale={locale} />
-    </div>
+    <main>
+      {/* 类别介绍 */}
+      <section className="bg-gradient-to-b from-primary-50 to-white py-8">
+        <div className="container mx-auto px-4">
+          <CategoryIntro category={category} />
+        </div>
+      </section>
+
+      {/* 转换器 */}
+      <section className="py-10">
+        <div className="container mx-auto px-4">
+          <Converter
+            initialFromUnit={fromUnit as "px" | "rem"}
+            initialToUnit={toUnit as "px" | "rem"}
+            locale={locale}
+          />
+        </div>
+      </section>
+
+      {/* 转换表格 */}
+      <section className="py-10 bg-gray-50">
+        <div className="container mx-auto px-4">
+          <ConversionTable category={category} />
+        </div>
+      </section>
+    </main>
   );
 } 

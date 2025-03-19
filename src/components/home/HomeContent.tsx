@@ -3,6 +3,7 @@
 import { useTranslations } from "next-intl";
 import Converter from "@/components/converter/Converter";
 import PopularConversions from "@/components/home/PopularConversions";
+import FeatureSection from "@/components/home/FeatureSection";
 
 // 同步组件用于渲染和使用钩子
 export default function HomeContent({ locale }: { locale: string }) {
@@ -38,6 +39,38 @@ export default function HomeContent({ locale }: { locale: string }) {
             {homeT('popular.title')}
           </h2>
           <PopularConversions locale={locale} />
+        </div>
+      </section>
+
+      {/* 关于 REM 的信息 */}
+      <section className="py-12 bg-gray-50">
+        <div className="container mx-auto px-4">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <FeatureSection
+              title={homeT("about.whatIsRem.title")}
+              content={homeT("about.whatIsRem.content")}
+            />
+            <FeatureSection
+              title={homeT("about.whyUseRem.title")}
+              content={homeT("about.whyUseRem.content")}
+            />
+            <FeatureSection
+              title={homeT("about.howToUse.title")}
+              content={homeT("about.howToUse.content")}
+              codeExample={`html {
+  font-size: 16px;
+}
+
+.title {
+  font-size: 1.5rem;  /* 24px */
+  margin-bottom: 1rem; /* 16px */
+}
+
+.container {
+  padding: 0.75rem; /* 12px */
+}`}
+            />
+          </div>
         </div>
       </section>
     </main>
