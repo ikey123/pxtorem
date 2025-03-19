@@ -10,6 +10,12 @@ export default function Header() {
   const t = useTranslations('nav');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
+  const popularTools = [
+    { name: 'PX to REM', path: '/px-to-rem' },
+    { name: 'REM to PX', path: '/rem-to-px' },
+    { name: 'EM to PX', path: '/em-to-px' },
+  ];
+
   return (
     <header className="bg-white shadow-sm">
       <div className="container mx-auto px-4">
@@ -34,21 +40,18 @@ export default function Header() {
           </div>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-8">
-            <Link 
-              href="/px-to-rem" 
-              className="text-gray-600 hover:text-primary-600 font-medium"
-            >
-              {t('pxToRem')}
-            </Link>
-            <Link 
-              href="/rem-to-px" 
-              className="text-gray-600 hover:text-primary-600 font-medium"
-            >
-              {t('remToPx')}
-            </Link>
+          <nav className="hidden md:flex items-center space-x-6">
+            {popularTools.map((tool) => (
+              <Link
+                key={tool.path}
+                href={tool.path}
+                className="text-gray-600 hover:text-primary-600 font-medium"
+              >
+                {tool.name}
+              </Link>
+            ))}
             <span className="text-gray-400 font-medium cursor-not-allowed">
-              {t('pxToEm')}
+              More Units (Soon)
             </span>
             <LanguageSwitcher />
           </nav>
@@ -58,22 +61,18 @@ export default function Header() {
         {isMenuOpen && (
           <div className="md:hidden py-4 border-t border-gray-100">
             <nav className="flex flex-col space-y-4">
-              <Link 
-                href="/px-to-rem" 
-                className="text-gray-600 hover:text-primary-600 font-medium"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                {t('pxToRem')}
-              </Link>
-              <Link 
-                href="/rem-to-px" 
-                className="text-gray-600 hover:text-primary-600 font-medium"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                {t('remToPx')}
-              </Link>
+              {popularTools.map((tool) => (
+                <Link
+                  key={tool.path}
+                  href={tool.path}
+                  className="text-gray-600 hover:text-primary-600 font-medium"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  {tool.name}
+                </Link>
+              ))}
               <span className="text-gray-400 font-medium cursor-not-allowed">
-                {t('pxToEm')}
+                More Units (Soon)
               </span>
               <div className="pt-2">
                 <LanguageSwitcher />
