@@ -96,13 +96,31 @@
     "metaDescription": "Convert {category} units with our free online tool."
   },
   "Slug": {
-    "metaTitle": "{category} - {slug} Conversion Tool",
-    "metaDescription": "Online tool to convert {slug} from {category} to REM units",
-    "title": "{category} Conversion: {slug}"
+    "metaTitle": "{category} Converter - {slug}",
+    "metaDescription": "Convert {slug} using our free {category} tool.",
+    "title": "{category} - {slug}"
   },
   "NotFound": {
     "title": "404 - Page Not Found",
     "message": "Sorry, the page you requested does not exist.",
     "back": "Back to Home"
+  },
+  "CategoryIntro": {
+    "px-to-rem": {
+      "title": "PX to REM Converter",
+      "description": "Convert pixels (px) to rem units instantly with our free online converter. Perfect for responsive web design and accessibility."
+    },
+    "rem-to-px": {
+      "title": "REM to PX Converter",
+      "description": "Convert rem units back to pixels (px) quickly and accurately. Helpful when you need to understand the absolute size of your elements."
+    },
+    "em-to-px": {
+      "title": "EM to PX Converter",
+      "description": "Convert em units to pixels (px) effortlessly with our free tool. Ideal for debugging layouts or aligning with pixel-based designs."
+    },
+    "px-to-em": {
+      "title": "PX to EM Converter",
+      "description": "Convert pixels (px) to em units seamlessly. Great for creating layouts that scale with parent font sizes."
+    }
   }
 } 

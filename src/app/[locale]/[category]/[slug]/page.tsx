@@ -9,13 +9,12 @@ type SlugParams = {
   params: Promise<{ locale: string; category: string; slug: string }>;
 };
 
-export async function generateMetadata({ 
-  params 
-}: SlugParams): Promise<Metadata> {
+export async function generateMetadata({ params }: SlugParams): Promise<Metadata> {
   const { locale, category, slug } = await params;
   const effectiveLocale = locales.includes(locale) ? locale : defaultLocale;
 
   if (!validCategories.includes(category)) {
+    console.warn(`无效的类别 in generateMetadata: ${category}`);
     return { title: 'Invalid Category', description: 'The requested category does not exist' };
   }
 
@@ -27,20 +26,18 @@ export async function generateMetadata({
       openGraph: {
         title: t('metaTitle', { slug, category }),
         description: t('metaDescription', { slug, category }),
-      }
+      },
     };
   } catch (error) {
     console.error('generateMetadata 错误:', error);
     return {
       title: `${category} - ${slug}`,
-      description: `${category} 转换工具 - ${slug}`
+      description: `${category} Conversion Tool - ${slug}`,
     };
   }
 }
 
-export default async function SlugPage({ 
-  params 
-}: SlugParams) {
+export default async function SlugPage({ params }: SlugParams) {
   const { locale, category, slug } = await params;
   const effectiveLocale = locales.includes(locale) ? locale : defaultLocale;
   console.log(`SlugPage - 原始语言: ${locale}, 类别: ${category}, Slug: ${slug}, 解析后语言: ${effectiveLocale}`);
@@ -65,6 +62,13 @@ export default async function SlugPage({
       notFound();
     }
     initialValue = parseFloat(match[1].replace('-', '.'));
+  } else if (category === 'em-to-px') {
+    const match = slug.match(/^(\d+(?:-\d+)?)-em-to-px$/); // 支持如 1-em-to-px, 1-5-em-to-px
+    if (!match) {
+      console.warn(`无效的 slug 格式: ${slug}`);
+      notFound();
+    }
+    initialValue = parseFloat(match[1].replace('-', '.')); // 将 "1-5" 转换为 1.5
   }
 
   try {
@@ -73,6 +77,6 @@ export default async function SlugPage({
     return <SlugContent locale={effectiveLocale} category={category} slug={slug} title={title} initialValue={initialValue} />;
   } catch (error) {
     console.error('SlugPage 错误:', error);
-    return <div className="container mx-auto px-4 py-8">加载错误，请稍后再试。</div>;
+    return <div className="container mx-auto px-4 py-8">Error loading page, please try again later.</div>;
   }
 }

@@ -4,14 +4,16 @@ export interface ConversionResult {
   formattedResult: string;
 }
 
+export const rootFontSize = 16;
+
 // PX 转换为 REM
-export function pxToRem(px: number, rootFontSize: number = 16): number {
-  return px / rootFontSize;
+export function pxToRem(px: number, base = rootFontSize): number {
+  return px / base;
 }
 
 // REM 转换为 PX
-export function remToPx(rem: number, rootFontSize: number = 16): number {
-  return rem * rootFontSize;
+export function remToPx(rem: number, base = rootFontSize): number {
+  return rem * base;
 }
 
 // 获取PX到REM的计算公式
@@ -42,27 +44,13 @@ export function formatConversionResult(
 }
 
 // 二期功能
-export function pxToEm(px: number, contextFontSize: number = 16): ConversionResult {
-  const emValue = px / contextFontSize;
-  const formula = `${px} ÷ ${contextFontSize}`;
-  
-  return {
-    value: emValue,
-    formula: formula,
-    formattedResult: formatNumber(emValue)
-  };
+export function pxToEm(px: number, base = rootFontSize): number {
+  return px / base;
 }
 
 // 二期功能
-export function emToPx(em: number, contextFontSize: number = 16): ConversionResult {
-  const pxValue = em * contextFontSize;
-  const formula = `${em} × ${contextFontSize}`;
-  
-  return {
-    value: pxValue,
-    formula: formula,
-    formattedResult: formatNumber(pxValue)
-  };
+export function emToPx(em: number, base = rootFontSize): number {
+  return em * base;
 }
 
 // 格式化数字，去除末尾多余的零

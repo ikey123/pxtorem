@@ -14,21 +14,26 @@ export default function CategoryContent({
   category: string;
   title: string;
 }) {
-  const fromUnit = category === "px-to-rem" ? "px" : "rem";
-  const toUnit = category === "px-to-rem" ? "rem" : "px";
+  // 动态设置单位
+  const fromUnit = category === "px-to-rem" ? "px" : category === "px-to-em" ? "px" : "em" || "rem";
+  const toUnit = category === "px-to-rem" ? "rem" : category === "px-to-em" ? "em" : "px";
 
-  // Common conversion values based on keyword research
-  const commonValues = category === "px-to-rem"
+  // 常见转换值，基于假设的 em-to-px 关键词调研
+  const commonValues = category === "em-to-px"
+    ? [0.5, 0.75, 1, 1.25, 1.5, 1.75, 2, 2.25, 2.5, 3, 3.5, 4, 5] // em-to-px 高流量值
+    : category === "px-to-em"
+    ? [10, 12, 14, 16, 18, 20, 24, 32, 36, 40, 48, 64, 72]
+    : category === "px-to-rem"
     ? [8, 10, 12, 14, 16, 18, 20, 24, 32, 36, 40, 48, 64]
     : [0.25, 0.5, 0.75, 1, 1.25, 1.5, 2, 2.5, 3, 3.5, 4, 5, 6];
 
-  // Conversion function (assuming 16px root font size)
+  // 转换函数，默认基准字体 16px
   const formatConversion = (value: number): string => {
-    if (category === "px-to-rem") {
+    if (category === "px-to-em" || category === "px-to-rem") {
       const result = value / 16;
       return result.toFixed(4).replace(/\.?0+$/, "");
     } else {
-      return (value * 16).toString();
+      return (value * 16).toString(); // em-to-px 和 rem-to-px 都乘以 16
     }
   };
 
@@ -45,14 +50,18 @@ export default function CategoryContent({
       <section className="py-10">
         <div className="container mx-auto px-4">
           <h1 className="text-3xl font-bold text-gray-900 mb-6">
-            {category === "px-to-rem" ? "PX to REM Converter" : "REM to PX Converter"}
+            {category === "em-to-px" ? "EM to PX Converter" : category === "px-to-em" ? "PX to EM Converter" : category === "px-to-rem" ? "PX to REM Converter" : "REM to PX Converter"}
           </h1>
           <p className="mb-6 max-w-3xl">
-            {category === "px-to-rem"
-              ? "Easily convert PX to REM with our free online PX to REM converter. Perfect for responsive web design, this tool helps you transform pixel values into scalable REM units, ensuring your layouts adapt seamlessly to any screen size or user preference."
-              : "Instantly convert REM to PX with our free REM to PX converter. Designed for developers and designers, this tool provides accurate pixel values from REM units, making it simple to debug layouts or align designs with pixel-based mockups."}
+            {category === "em-to-px"
+              ? "Instantly convert EM to PX with our free EM to PX converter. Designed for web developers, this tool transforms EM units into pixel values, making it easy to align designs with pixel-based specifications or debug layouts."
+              : category === "px-to-em"
+              ? "Effortlessly convert PX to EM with our free PX to EM converter. Tailored for web developers, this tool transforms pixels into EM units, perfect for flexible layouts that adapt to parent font sizes."
+              : category === "px-to-rem"
+              ? "Easily convert PX to REM with our free online PX to REM converter. Perfect for responsive web design, this tool helps you transform pixel values into scalable REM units."
+              : "Instantly convert REM to PX with our free REM to PX converter. Designed for developers and designers, this tool provides accurate pixel values from REM units."}
           </p>
-          <Converter initialFromUnit={fromUnit as "px" | "rem"} initialToUnit={toUnit as "px" | "rem"} locale={locale} />
+          <Converter initialFromUnit={fromUnit as "px" | "rem" | "em"} initialToUnit={toUnit as "px" | "rem" | "em"} locale={locale} />
         </div>
       </section>
 
@@ -63,7 +72,7 @@ export default function CategoryContent({
             Popular {fromUnit.toUpperCase()} to {toUnit.toUpperCase()} Conversions
           </h2>
           <p className="mb-6 max-w-3xl">
-            Check out these popular {fromUnit} to {toUnit} conversions based on a standard 16px root font size. Whether you need to convert 16px to REM or 1.5rem to PX, our tool makes it fast and accurate.
+            Explore the most popular {fromUnit} to {toUnit} conversions, such as {category === "em-to-px" ? "1em to PX" : category === "px-to-em" ? "16px to EM" : category === "px-to-rem" ? "16px to REM" : "1.5rem to PX"}, based on a standard 16px font size.
           </p>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
             {commonValues.map((value) => (
@@ -93,21 +102,20 @@ export default function CategoryContent({
             Why Convert {fromUnit.toUpperCase()} to {toUnit.toUpperCase()}?
           </h2>
           <p className="mb-6 max-w-3xl">
-            Converting {fromUnit} to {toUnit} is essential for modern web development. Whether you're switching from PX to REM for responsive design or REM to PX for precise debugging, understanding when and why to use these units can elevate your projects.
+            Converting {fromUnit} to {toUnit} is crucial for modern web development. Whether you're switching {category === "em-to-px" ? "EM to PX for precise debugging" : category === "px-to-em" ? "PX to EM for parent-based scaling" : category === "px-to-rem" ? "PX to REM for responsive design" : "REM to PX for pixel accuracy"}, this tool simplifies your workflow.
           </p>
           <ul className="list-disc pl-6 max-w-3xl space-y-2">
             <li>
-              <strong>Responsive Design:</strong> {category === "px-to-rem" ? "PX to REM conversion ensures your layouts scale smoothly across devices." : "REM to PX conversion helps verify responsive designs in pixel terms."}
+              {category === "em-to-px"
+                ? "Convert EM to PX to align with pixel-based designs or mockups."
+                : category === "px-to-em"
+                ? "PX to EM ensures elements scale relative to parent font sizes."
+                : category === "px-to-rem"
+                ? "PX to REM ensures responsive, accessible designs."
+                : "REM to PX helps verify pixel-perfect layouts."}
             </li>
-            <li>
-              <strong>Accessibility:</strong> {category === "px-to-rem" ? "REM units adapt to user font size preferences, unlike fixed PX values." : "Converting REM to PX lets you check accessibility compliance."}
-            </li>
-            <li>
-              <strong>Consistency:</strong> Maintain uniform spacing and typography by using {toUnit} units effectively.
-            </li>
-            <li>
-              <strong>Efficiency:</strong> Save time with our {fromUnit} to {toUnit} calculator instead of manual calculations.
-            </li>
+            <li>Improves consistency across typography and spacing.</li>
+            <li>Fast conversions for values like {category === "em-to-px" ? "1.5em to PX" : category === "px-to-em" ? "24px to EM" : category === "px-to-rem" ? "24px to REM" : "2rem to PX"}.</li>
           </ul>
         </div>
       </section>
@@ -115,27 +123,25 @@ export default function CategoryContent({
       {/* Comparison Section */}
       <section className="py-12 bg-gray-50">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-gray-900 mb-8">PX vs REM: Key Differences</h2>
+          <h2 className="text-3xl font-bold text-gray-900 mb-8">
+            {fromUnit.toUpperCase()} vs {toUnit.toUpperCase()}: Key Differences
+          </h2>
           <p className="mb-6 max-w-3xl">
-            Wondering about PX vs REM? Here's a breakdown to help you decide when to convert PX to REM or REM to PX in your CSS projects.
+            Understanding {fromUnit} vs {toUnit} helps you choose the right unit for your CSS. Here's how they compare.
           </p>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             <div className="bg-white p-6 rounded-lg shadow-sm">
-              <h3 className="text-xl font-semibold mb-4">PX (Pixels)</h3>
+              <h3 className="text-xl font-semibold mb-4">{fromUnit.toUpperCase()}</h3>
               <ul className="space-y-2">
-                <li>Fixed units, ideal for precise control (e.g., 1px borders).</li>
-                <li>Doesn't scale with user font settings.</li>
-                <li>Best for small, static elements like shadows or hairlines.</li>
-                <li>Common in design mockups (e.g., 16px text).</li>
+                <li>{category === "em-to-px" || category === "px-to-em" ? "Relative to parent font size (e.g., 1em)." : category === "px-to-rem" ? "Fixed units (e.g., 16px)." : "Relative to root font size (e.g., 1rem)."}</li>
+                <li>{category === "em-to-px" || category === "px-to-em" ? "Ideal for nested scaling." : category === "px-to-rem" ? "Best for static elements." : "Scales with root settings."}</li>
               </ul>
             </div>
             <div className="bg-white p-6 rounded-lg shadow-sm">
-              <h3 className="text-xl font-semibold mb-4">REM (Root EM)</h3>
+              <h3 className="text-xl font-semibold mb-4">{toUnit.toUpperCase()}</h3>
               <ul className="space-y-2">
-                <li>Relative to root font size (default 16px), scales dynamically.</li>
-                <li>Perfect for typography, spacing, and responsive layouts.</li>
-                <li>Enhances accessibility by respecting user preferences.</li>
-                <li>Simplifies maintenance with fewer media queries.</li>
+                <li>{category === "em-to-px" ? "Fixed units for precision (e.g., 16px)." : category === "px-to-em" ? "Relative to parent font size (e.g., 1em)." : category === "px-to-rem" ? "Relative to root font size (e.g., 1rem)." : "Fixed units (e.g., 16px)."}</li>
+                <li>{category === "em-to-px" ? "Perfect for debugging." : category === "px-to-em" || category === "px-to-rem" ? "Ideal for responsive design." : "Best for static precision."}</li>
               </ul>
             </div>
           </div>
@@ -149,7 +155,7 @@ export default function CategoryContent({
             {fromUnit.toUpperCase()} to {toUnit.toUpperCase()} Conversion Table
           </h2>
           <p className="mb-6 max-w-3xl">
-            Explore our detailed {fromUnit} to {toUnit} conversion table. Whether you're converting 16px to REM or 1.5rem to PX, this table provides quick reference values based on a 16px root font size.
+            Browse our detailed {fromUnit} to {toUnit} conversion table for quick reference. Convert values like {category === "em-to-px" ? "1em to PX" : category === "px-to-em" ? "16px to EM" : category === "px-to-rem" ? "16px to REM" : "1.5rem to PX"} effortlessly.
           </p>
           <ConversionTable category={category} hideSearchVolume={true} />
         </div>
@@ -162,95 +168,59 @@ export default function CategoryContent({
             CSS Examples with {toUnit.toUpperCase()} Units
           </h2>
           <p className="mb-6 max-w-3xl">
-            See how to use {toUnit} units in your CSS after converting from {fromUnit}. These practical examples show PX to REM and REM to PX in action.
+            See how {toUnit} units work in CSS after converting from {fromUnit}. These examples highlight practical usage.
           </p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div className="bg-white p-6 rounded-lg shadow-sm">
               <h3 className="text-xl font-semibold mb-4">Typography</h3>
               <pre className="text-sm overflow-x-auto bg-gray-100 p-4 rounded">
-                {`html {
+                {`.parent {
   font-size: 16px;
 }
-h1 { font-size: ${category === "px-to-rem" ? "2rem" : "32px"}; /* ${category === "px-to-rem" ? "32px" : "2rem"} */ }
-p { font-size: ${category === "px-to-rem" ? "1rem" : "16px"}; /* ${category === "px-to-rem" ? "16px" : "1rem"} */ }
-small { font-size: ${category === "px-to-rem" ? "0.75rem" : "12px"}; /* ${category === "px-to-rem" ? "12px" : "0.75rem"} */ }`}
+h1 { font-size: ${category === "em-to-px" ? "32px" : category === "px-to-em" ? "2em" : category === "px-to-rem" ? "2rem" : "32px"}; /* ${category === "em-to-px" ? "2em" : category === "px-to-em" ? "32px" : category === "px-to-rem" ? "32px" : "2rem"} */ }
+p { font-size: ${category === "em-to-px" ? "16px" : category === "px-to-em" ? "1em" : category === "px-to-rem" ? "1rem" : "16px"}; /* ${category === "em-to-px" ? "1em" : category === "px-to-em" ? "16px" : category === "px-to-rem" ? "16px" : "1rem"} */ }`}
               </pre>
             </div>
             <div className="bg-white p-6 rounded-lg shadow-sm">
               <h3 className="text-xl font-semibold mb-4">Spacing</h3>
               <pre className="text-sm overflow-x-auto bg-gray-100 p-4 rounded">
                 {`.container {
-  padding: ${category === "px-to-rem" ? "1.5rem" : "24px"}; /* ${category === "px-to-rem" ? "24px" : "1.5rem"} */
-  margin: ${category === "px-to-rem" ? "1rem" : "16px"} auto; /* ${category === "px-to-rem" ? "16px" : "1rem"} */
-}
-.card {
-  border: 1px solid #ddd; /* PX for precision */
-  border-radius: ${category === "px-to-rem" ? "0.5rem" : "8px"}; /* ${category === "px-to-rem" ? "8px" : "0.5rem"} */
+  padding: ${category === "em-to-px" ? "24px" : category === "px-to-em" ? "1.5em" : category === "px-to-rem" ? "1.5rem" : "24px"}; /* ${category === "em-to-px" ? "1.5em" : category === "px-to-em" ? "24px" : category === "px-to-rem" ? "24px" : "1.5rem"} */
+  margin: ${category === "em-to-px" ? "16px" : category === "px-to-em" ? "1em" : category === "px-to-rem" ? "1rem" : "16px"} auto; /* ${category === "em-to-px" ? "1em" : category === "px-to-em" ? "16px" : category === "px-to-rem" ? "16px" : "1rem"} */
 }`}
               </pre>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Responsive Design Section */}
-      <section className="py-12 bg-white">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-gray-900 mb-8">
-            {fromUnit.toUpperCase()} to {toUnit.toUpperCase()} in Responsive Design
-          </h2>
-          <p className="mb-6 max-w-3xl">
-            Using a {fromUnit} to {toUnit} converter is key to building responsive websites. Here's how {toUnit} units enhance your design workflow.
-          </p>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div className="bg-gray-50 p-6 rounded-lg">
-              <h3 className="text-xl font-semibold mb-4">Media Queries</h3>
-              <pre className="text-sm overflow-x-auto bg-gray-100 p-4 rounded mb-4">
-                {`@media (min-width: ${category === "px-to-rem" ? "48rem" : "768px"}) { /* ${category === "px-to-rem" ? "768px" : "48rem"} */
-  .content {
-    font-size: ${category === "px-to-rem" ? "1.125rem" : "18px"}; /* ${category === "px-to-rem" ? "18px" : "1.125rem"} */
-  }
-}`}
-              </pre>
-              <p>REM-based media queries scale with user settings, improving accessibility.</p>
-            </div>
-            <div className="bg-gray-50 p-6 rounded-lg">
-              <h3 className="text-xl font-semibold mb-4">Component Scaling</h3>
-              <pre className="text-sm overflow-x-auto bg-gray-100 p-4 rounded mb-4">
-                {`.button {
-  padding: ${category === "px-to-rem" ? "0.75rem 1.25rem" : "12px 20px"}; /* ${category === "px-to-rem" ? "12px 20px" : "0.75rem 1.25rem"} */
-  font-size: ${category === "px-to-rem" ? "1rem" : "16px"}; /* ${category === "px-to-rem" ? "16px" : "1rem"} */
-}`}
-              </pre>
-              <p>Components scale proportionally with {toUnit} units.</p>
             </div>
           </div>
         </div>
       </section>
 
       {/* FAQ Section */}
-      <section className="py-12 bg-gray-50">
+      <section className="py-12 bg-white">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-gray-900 mb-8">Frequently Asked Questions</h2>
           <div className="max-w-3xl mx-auto space-y-6">
             <div>
               <h3 className="text-xl font-semibold mb-2">How do I convert {fromUnit} to {toUnit}?</h3>
               <p>
-                {category === "px-to-rem"
-                  ? "To convert PX to REM, divide the pixel value by the root font size (e.g., 16px). For example, 24px to REM is 24 ÷ 16 = 1.5rem."
-                  : "To convert REM to PX, multiply the REM value by the root font size (e.g., 16px). For example, 1.5rem to PX is 1.5 × 16 = 24px."}
+                {category === "em-to-px"
+                  ? "Multiply the EM value by the parent font size (e.g., 16px). For example, 1em to PX = 1 × 16 = 16px."
+                  : category === "px-to-em"
+                  ? "Divide the PX value by the parent font size (e.g., 16px). For example, 16px to EM = 16 ÷ 16 = 1em."
+                  : category === "px-to-rem"
+                  ? "Divide the PX value by the root font size (e.g., 16px). For example, 24px to REM = 24 ÷ 16 = 1.5rem."
+                  : "Multiply the REM value by the root font size (e.g., 16px). For example, 1.5rem to PX = 1.5 × 16 = 24px."}
               </p>
             </div>
             <div>
-              <h3 className="text-xl font-semibold mb-2">Why use a {fromUnit} to {toUnit} converter?</h3>
+              <h3 className="text-xl font-semibold mb-2">What's the difference between EM and REM?</h3>
               <p>
-                A {fromUnit} to {toUnit} converter saves time and ensures accuracy, especially for common values like 16px to REM or 1rem to PX.
+                EM is relative to the parent font size, while REM is relative to the root font size. Use our EM to PX converter for precise pixel values or PX to EM for parent-based scaling.
               </p>
             </div>
             <div>
-              <h3 className="text-xl font-semibold mb-2">What's better: PX or REM?</h3>
+              <h3 className="text-xl font-semibold mb-2">Why use an {fromUnit} to {toUnit} converter?</h3>
               <p>
-                REM is better for responsive design and accessibility, while PX offers precision for fixed elements. Use our PX to REM converter to find the perfect balance.
+                An {fromUnit} to {toUnit} converter ensures accuracy and saves time, especially for values like {category === "em-to-px" ? "2em to PX" : category === "px-to-em" ? "24px to EM" : category === "px-to-rem" ? "16px to REM" : "1rem to PX"}.
               </p>
             </div>
           </div>
@@ -262,12 +232,9 @@ small { font-size: ${category === "px-to-rem" ? "0.75rem" : "12px"}; /* ${catego
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-3xl font-bold mb-6">Try Our {fromUnit.toUpperCase()} to {toUnit.toUpperCase()} Converter</h2>
           <p className="mb-8 max-w-2xl mx-auto">
-            Ready to streamline your CSS workflow? Use our free {fromUnit} to {toUnit} calculator now and make your designs more responsive and accessible.
+            Simplify your CSS with our free {fromUnit} to {toUnit} converter. Convert values like {category === "em-to-px" ? "1em to PX" : category === "px-to-em" ? "16px to EM" : category === "px-to-rem" ? "16px to REM" : "1rem to PX"} instantly!
           </p>
-          <Link
-            href={`/${locale}/${category}`}
-            className="inline-block bg-white text-primary-600 font-semibold py-3 px-6 rounded-lg hover:bg-gray-100"
-          >
+          <Link href={`/${locale}/${category}`} className="inline-block bg-white text-primary-600 font-semibold py-3 px-6 rounded-lg hover:bg-gray-100">
             Convert Now
           </Link>
         </div>
