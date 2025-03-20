@@ -36,7 +36,7 @@ export function formatConversionResult(
   if (fromUnit === toUnit) return value.toString();
 
   if (fromUnit === "px" && toUnit === "rem") {
-    return pxToRem(value, base).toFixed(4).replace(/\.?0+$/, "");
+    return formatNumber(pxToRem(value, base));
   } else if (fromUnit === "rem" && toUnit === "px") {
     return remToPx(value, base).toFixed(0);
   }

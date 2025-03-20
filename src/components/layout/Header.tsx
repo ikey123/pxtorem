@@ -2,18 +2,18 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { useTranslations } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import LanguageSwitcher from './LanguageSwitcher';
 
 export default function Header() {
   const t = useTranslations('nav');
+  const locale = useLocale();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const popularTools = [
-    { name: 'PX to REM', path: '/px-to-rem' },
-    { name: 'REM to PX', path: '/rem-to-px' },
-    // { name: 'EM to PX', path: '/em-to-px' }, // 隐藏 EM to PX
+    { name: t('pxToRem') || 'PX to REM', path: 'px-to-rem' },
+    { name: t('remToPx') || 'REM to PX', path: 'rem-to-px' },
   ];
 
   return (
@@ -21,7 +21,7 @@ export default function Header() {
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center py-4">
           {/* Logo */}
-          <Link href="/" className="text-xl font-bold text-primary-600">
+          <Link href={`/${locale}`} className="text-xl font-bold text-primary-600">
             pxtorem.org
           </Link>
 
@@ -44,14 +44,14 @@ export default function Header() {
             {popularTools.map((tool) => (
               <Link
                 key={tool.path}
-                href={tool.path}
+                href={`/${locale}/${tool.path}`}
                 className="text-gray-600 hover:text-primary-600 font-medium"
               >
                 {tool.name}
               </Link>
             ))}
             <span className="text-gray-400 font-medium cursor-not-allowed">
-              More Units (Soon)
+              {t('moreUnits') || 'More Units (Soon)'}
             </span>
             <LanguageSwitcher />
           </nav>
@@ -64,7 +64,7 @@ export default function Header() {
               {popularTools.map((tool) => (
                 <Link
                   key={tool.path}
-                  href={tool.path}
+                  href={`/${locale}/${tool.path}`}
                   className="text-gray-600 hover:text-primary-600 font-medium"
                   onClick={() => setIsMenuOpen(false)}
                 >
@@ -72,7 +72,7 @@ export default function Header() {
                 </Link>
               ))}
               <span className="text-gray-400 font-medium cursor-not-allowed">
-                More Units (Soon)
+                {t('moreUnits') || 'More Units (Soon)'}
               </span>
               <div className="pt-2">
                 <LanguageSwitcher />

@@ -4,6 +4,7 @@ import Converter from "@/components/converter/Converter";
 import CategoryIntro from "@/components/category/CategoryIntro";
 import ConversionTable from "@/components/category/ConversionTable";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 
 export default function CategoryContent({
   locale,

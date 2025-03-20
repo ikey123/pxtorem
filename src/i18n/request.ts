@@ -4,8 +4,13 @@ import { getRequestConfig } from 'next-intl/server'; // 显式导入 getRequestC
 // 直接定义常量，不需要从外部导入
 export const locales = ['en', 'es'] as const;
 export const defaultLocale = 'en';
-export const validCategories = ['px-to-rem', 'rem-to-px', 'em-to-px'] as const;
+export const validCategories = [
+  'px-to-rem',
+  'rem-to-px'
+] as const;
 export const rootFontSize = 16; // 根字体大小，用于计算
+
+export type ValidCategory = typeof validCategories[number];
 
 export default getRequestConfig(async ({ locale }) => {
   // 确保 locale 永远有默认值

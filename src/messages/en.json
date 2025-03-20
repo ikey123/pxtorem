@@ -19,7 +19,8 @@
     "pxToEm": "PX to EM (Coming Soon)",
     "remToEm": "REM to EM (Coming Soon)",
     "about": "About",
-    "contact": "Contact"
+    "contact": "Contact",
+    "moreUnits": "More Units (Soon)"
   },
   "converter": {
     "inputPlaceholder": "Enter value",
@@ -108,11 +109,11 @@
   "CategoryIntro": {
     "px-to-rem": {
       "title": "PX to REM Converter",
-      "description": "Convert pixels (px) to rem units instantly with our free online converter. Perfect for responsive web design and accessibility."
+      "description": "Convert pixels (px) to rem units instantly. Perfect for responsive web design."
     },
     "rem-to-px": {
       "title": "REM to PX Converter",
-      "description": "Convert rem units back to pixels (px) quickly and accurately. Helpful when you need to understand the absolute size of your elements."
+      "description": "Convert rem units to pixels (px) quickly and accurately."
     },
     "em-to-px": {
       "title": "EM to PX Converter",

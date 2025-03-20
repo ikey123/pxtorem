@@ -1,7 +1,16 @@
 {
   "common": {
-    "title": "Conversor de PX a REM",
-    "description": "Convierta fácilmente entre unidades PX y REM"
+    "title": "Conversor de Unidades",
+    "description": "Convierte PX a REM al instante y gratis. Optimiza tu diseño web responsive con nuestro conversor de unidades CSS.",
+    "startConverting": "Empezar a Convertir",
+    "slugTitle": "Conversión de {slug} ({category})",
+    "copy": "Copiar",
+    "copied": "¡Copiado!",
+    "details": "Detalles",
+    "notFound": "Página No Encontrada",
+    "goHome": "Volver al inicio",
+    "about": "Acerca de",
+    "contact": "Contacto"
   },
   "nav": {
     "home": "Inicio",
@@ -9,17 +18,19 @@
     "remToPx": "REM a PX",
     "pxToEm": "PX a EM (Próximamente)",
     "remToEm": "REM a EM (Próximamente)",
+    "moreUnits": "Más Unidades (Próximamente)",
     "about": "Acerca de",
     "contact": "Contacto"
   },
   "converter": {
-    "inputPlaceholder": "Ingresa un valor",
-    "from": "De",
-    "to": "A",
-    "rootFontSize": "Tamaño de Fuente Raíz",
-    "result": "{value} {from} = {result} {to}",
+    "inputPlaceholder": "Ingrese valor",
+    "from": "Desde",
+    "to": "Hasta",
+    "rootFontSize": "Tamaño de fuente raíz",
+    "result": "{value}{from} = {result}{to}",
     "calculation": "Cálculo: {formula}",
-    "copy": "Copiar" 
+    "copy": "Copiar",
+    "copied": "¡Copiado!"
   },
   "home": {
     "hero": {
@@ -28,6 +39,14 @@
     },
     "popular": {
       "title": "Conversiones Populares",
+      "px-to-rem": { 
+        "title": "PX a REM",
+        "item": "{px}px a rem"
+      },
+      "rem-to-px": { 
+        "title": "REM a PX",
+        "item": "{rem}rem a px"
+      },
       "viewMore": "Ver Más"
     },
     "about": {
@@ -82,18 +101,48 @@
     "title": "PX a REM - {locale}"
   },
   "Category": {
-    "metaTitle": "{category} Conversor",
-    "metaDescription": "Convierta unidades {category} fácilmente",
-    "title": "Conversor de {category}"
+    "title": "Conversor de {category}",
+    "metaTitle": "Conversor de {category} - Herramienta CSS Gratuita",
+    "metaDescription": "Convierte unidades {category} con nuestra herramienta en línea gratuita."
   },
   "Slug": {
-    "metaTitle": "{category} - {slug}",
-    "metaDescription": "Convierta {category} con valor {slug}",
-    "title": "Conversor de {category} - {slug}"
+    "metaTitle": "Conversor de {category} - {slug}",
+    "metaDescription": "Convierte {slug} usando nuestra herramienta gratuita de {category}.",
+    "title": "{category} - {slug}"
   },
   "NotFound": {
     "title": "404 - Página No Encontrada",
-    "message": "Lo sentimos, la página solicitada no existe.",
+    "message": "Lo sentimos, la página que buscas no existe.",
     "back": "Volver al Inicio"
+  },
+  "CategoryIntro": {
+    "px-to-rem": {
+      "title": "Conversor de PX a REM",
+      "description": "Convierte píxeles (px) a unidades rem al instante. Ideal para diseño web responsive."
+    },
+    "rem-to-px": {
+      "title": "Conversor de REM a PX",
+      "description": "Convierte unidades rem a píxeles (px) de forma rápida y precisa."
+    }
+  },
+  "CategoryContent": {
+    "popularConversions": "Conversiones Populares de {fromUnit} a {toUnit}",
+    "whyConvert": "¿Por qué convertir {fromUnit} a {toUnit}?",
+    "whyConvertDescription": "Convertir {fromUnit} a {toUnit} mejora tu flujo de trabajo de diseño web.",
+    "whyConvertReasons": {
+      "px-to-rem": "PX a REM asegura diseños responsivos y accesibles.",
+      "rem-to-px": "REM a PX ayuda a verificar tamaños exactos en píxeles."
+    },
+    "improvesMaintainability": "Mejora la mantenibilidad y consistencia en tu CSS.",
+    "comparison": "{fromUnit} vs {toUnit}: Diferencias Clave",
+    "comparisonDescription": "Entender {fromUnit} vs {toUnit} te ayuda a elegir la unidad correcta.",
+    "faq": "Preguntas Frecuentes",
+    "faqHowTo": "¿Cómo convierto {fromUnit} a {toUnit}?",
+    "faqHowToAnswers": {
+      "px-to-rem": "Divide el valor en PX por el tamaño de fuente raíz (ej. 16px). Por ejemplo, 16px a REM = 16 ÷ 16 = 1rem.",
+      "rem-to-px": "Multiplica el valor en REM por el tamaño de fuente raíz (ej. 16px). Por ejemplo, 1.5rem a PX = 1.5 × 16 = 24px."
+    },
+    "cta": "Prueba Nuestro Conversor de {fromUnit} a {toUnit}",
+    "ctaDescription": "Simplifica tu trabajo con nuestro conversor gratuito de {fromUnit} a {toUnit}. ¡Convierte valores al instante!"
   }
 } 

@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { pxToRem, remToPx, pxToEm, emToPx } from '@/lib/unit-conversions';
+import { pxToRem, remToPx } from '@/lib/unit-conversions';
 import { ArrowTopRightOnSquareIcon } from '@heroicons/react/24/outline';
 
 interface ConversionTableProps {
@@ -28,15 +28,12 @@ export default function ConversionTable({
   const [rootFontSize, setRootFontSize] = useState(16);
   const [showAll, setShowAll] = useState(false);
   
-  const isPxToRem = category === 'px-to-rem';
-  
   useEffect(() => {
     const items: ConversionItem[] = [];
     
     if (category === 'px-to-rem') {
-      // 生成常用的PX到REM转换
       [8, 10, 12, 14, 16, 18, 20, 24, 32, 48, 64].forEach(px => {
-        const result = pxToRem(px);
+        const result = pxToRem(px, rootFontSize);
         items.push({
           from: px,
           fromUnit: 'px',
@@ -48,9 +45,8 @@ export default function ConversionTable({
         });
       });
     } else if (category === 'rem-to-px') {
-      // 生成常用的REM到PX转换
       [0.25, 0.5, 0.75, 1, 1.25, 1.5, 2, 2.5, 3, 4, 5].forEach(rem => {
-        const result = remToPx(rem);
+        const result = remToPx(rem, rootFontSize);
         items.push({
           from: rem,
           fromUnit: 'rem',
@@ -61,43 +57,15 @@ export default function ConversionTable({
           slug: `${rem.toString().replace('.', '-')}-rem-to-px`
         });
       });
-    } else if (category === 'em-to-px') {
-      // 生成常用的EM到PX转换
-      [0.5, 0.75, 1, 1.25, 1.5, 1.75, 2, 2.25, 2.5, 3, 3.5, 4, 5].forEach(em => {
-        const result = emToPx(em);
-        items.push({
-          from: em,
-          fromUnit: 'em',
-          to: result,
-          toUnit: 'px',
-          formattedResult: result.toFixed(0),
-          searchVolume: em === 1 ? 'High' : em % 0.5 === 0 ? 'Medium' : 'Low',
-          slug: `${em.toString().replace('.', '-')}-em-to-px`
-        });
-      });
-    } else if (category === 'px-to-em') {
-      // 生成常用的PX到EM转换
-      [10, 12, 14, 16, 18, 20, 24, 32, 36, 40, 48, 64, 72].forEach(px => {
-        const result = pxToEm(px);
-        items.push({
-          from: px,
-          fromUnit: 'px',
-          to: result,
-          toUnit: 'em',
-          formattedResult: result.toFixed(4).replace(/\.?0+$/, ''),
-          searchVolume: px === 16 ? 'High' : px % 8 === 0 ? 'Medium' : 'Low',
-          slug: `${px}-px-to-em`
-        });
-      });
     }
     
     setConversions(items);
-  }, [category]);
+  }, [category, rootFontSize]);
   
   return (
     <div className="space-y-6">
       <h2 className="text-2xl font-bold text-gray-900 mb-6">
-        {category === 'px-to-rem' ? 'PX to REM Conversion Table' : category === 'rem-to-px' ? 'REM to PX Conversion Table' : category === 'em-to-px' ? 'EM to PX Conversion Table' : 'PX to EM Conversion Table'}
+        {category === 'px-to-rem' ? 'PX to REM Conversion Table' : 'REM to PX Conversion Table'}
       </h2>
       
       {/* 字体大小调整 */}
@@ -125,10 +93,10 @@ export default function ConversionTable({
             <thead className="bg-gray-100">
               <tr>
                 <th className="border px-4 py-2 text-left">
-                  {category === "px-to-rem" ? "PX" : category === "rem-to-px" ? "REM" : "EM"}
+                  {category === "px-to-rem" ? "PX" : "REM"}
                 </th>
                 <th className="border px-4 py-2 text-left">
-                  {category === "px-to-rem" ? "REM" : category === "rem-to-px" ? "PX" : category === "em-to-px" ? "PX" : "EM"} (16px base)
+                  {category === "px-to-rem" ? "REM" : "PX"}
                 </th>
                 {!hideSearchVolume && (
                   <th className="border px-4 py-2 text-left">Search Volume</th>
@@ -138,8 +106,8 @@ export default function ConversionTable({
             <tbody>
               {conversions.map((item, index) => (
                 <tr key={index} className={index % 2 === 0 ? "bg-white" : "bg-gray-50"}>
-                  <td className="border px-4 py-2">{item.from}</td>
-                  <td className="border px-4 py-2">{item.formattedResult} {item.toUnit}</td>
+                  <td className="border px-4 py-2">{item.from}{item.fromUnit}</td>
+                  <td className="border px-4 py-2">{item.formattedResult}{item.toUnit}</td>
                   {!hideSearchVolume && (
                     <td className="border px-4 py-2">
                       <span className={`inline-flex px-2 py-1 text-xs rounded-full ${
