@@ -19,11 +19,11 @@ export default async function LocaleLayout({
   params,
   children,
 }: {
-  params: Promise<{ locale: string }>;  // 修改为 Promise 类型
+  params: { locale: string };
   children: React.ReactNode;
 }) {
   try {
-    const { locale: rawLocale } = await params;  // 添加 await
+    const { locale: rawLocale } = params;
     const locale = rawLocale && locales.includes(rawLocale) ? rawLocale : defaultLocale;
     
     console.log(`Layout - 原始语言: ${rawLocale}, 解析后语言: ${locale}`);
@@ -32,9 +32,17 @@ export default async function LocaleLayout({
       console.error(`无法加载语言 ${locale} 的翻译: ${error.message}`);
       return import(`../../messages/${defaultLocale}.json`).then((mod) => mod.default);
     });
-    
+
+    // 动态生成 Canonical URL
+    const canonicalBase = 'https://pxtorem.org';
+    const canonicalPath = locale === defaultLocale ? '' : `/${locale}`; // 默认语言（en）不加前缀
+    const canonicalUrl = `${canonicalBase}${canonicalPath}`;
+
     return (
       <html lang={locale} className="scroll-smooth">
+        <head>
+          <link rel="canonical" href={canonicalUrl} />
+        </head>
         <body className={inter.className}>
           <NextIntlClientProvider locale={locale} messages={messages}>
             <div className="min-h-screen flex flex-col">

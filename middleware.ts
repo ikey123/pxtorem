@@ -2,11 +2,21 @@
 console.log('中间件文件被加载');
 import { NextRequest, NextResponse } from 'next/server';
 import { locales, defaultLocale, validCategories } from './src/i18n/request';
+import createMiddleware from 'next-intl/middleware';
 // 预编译正则表达式
 const SLUG_PATTERNS = {
   pxToRem: /^\d+-px-to-rem$/,
   remToPx: /^\d+(?:-\d+)?-rem-to-px$/,
 } as const;
+
+export default createMiddleware({
+  locales: [
+    'en',
+    // 'es', // 暂时注释掉西班牙语，需要时取消注释即可
+  ],
+  defaultLocale: 'en',
+  localePrefix: 'always'
+});
 
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
@@ -62,8 +72,5 @@ export function middleware(request: NextRequest) {
 
 // 更新匹配器配置
 export const config = {
-  matcher: [
-    '/',
-    '/((?!_next|api|_vercel|_static|favicon.ico|robots.txt|.*\\..*).*)',
-  ],
+  matcher: ['/((?!api|_next|_vercel|.*\\..*).*)']
 };

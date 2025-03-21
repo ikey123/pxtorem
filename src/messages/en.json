@@ -10,7 +10,8 @@
     "notFound": "Page Not Found",
     "goHome": "Go back home",
     "about": "About",
-    "contact": "Contact"
+    "contact": "Contact",
+    "popularConversions": "Popular Conversions"
   },
   "nav": {
     "home": "Home",
@@ -29,7 +30,15 @@
     "rootFontSize": "Root Font Size",
     "result": "{value} {from} = {result} {to}",
     "calculation": "Calculation: {formula}",
-    "copy": "Copy"
+    "copy": "Copy",
+    "converter": {
+      "title": "Converter",
+      "description": "Enter pixel or REM values to convert",
+      "baseFontSize": "Base Font Size",
+      "from": "From",
+      "to": "To",
+      "copy": "Copy"
+    }
   },
   "home": {
     "hero": {
@@ -57,32 +66,42 @@
   },
   "footer": {
     "popularLinks": "Popular Conversions",
-    "contact": "Contact",
+    "navigation": "Navigation",
     "language": "Language",
+    "about": "About",
+    "contact": "Contact",
+    "home": "Home",
+    "moreUnits": "More Units (Soon)",
+    "english": "English",
+    "spanish": "Spanish",
+    "pxToRem": "PX to REM",
+    "remToPx": "REM to PX",
+    "popularLinksItems": {
+      "px16": "16px to REM",
+      "px10": "10px to REM",
+      "px20": "20px to REM",
+      "rem1": "1 REM to PX",
+      "rem0_5": "0.5 REM to PX",
+      "rem1_5": "1.5 REM to PX"
+    },
     "copyright": "© {year} pxtorem.org. All rights reserved."
   },
   "about": {
-    "title": "About PX to REM Converter",
-    "subtitle": "Learn about our free tool for converting between CSS units",
-    "mission": "Our Mission",
-    "missionText": "At pxtorem.org, our mission is to provide web developers and designers with simple, reliable tools that make responsive web design easier.",
-    "whyBuilt": "Why We Built This Tool",
-    "whyBuiltText": "Converting between pixels and REM units is a common task in modern web development. While the calculation is simple, having a dedicated tool saves time and reduces errors."
+    "title": "About Us",
+    "subtitle": "Learn more about our mission and values.",
+    "description": "We are dedicated to providing the best service possible.",
+    "missionTitle": "Our Mission",
+    "missionDescription": "To empower individuals through education.",
+    "visionTitle": "Our Vision",
+    "visionDescription": "A world where everyone has access to quality education.",
+    "valuesTitle": "Our Values",
+    "value1": "Integrity",
+    "value2": "Innovation",
+    "value3": "Community"
   },
   "contact": {
     "title": "Contact Us",
-    "subtitle": "We'd love to hear from you! Send us your questions or feedback.",
-    "form": {
-      "name": "Your Name",
-      "email": "Email Address",
-      "subject": "Subject",
-      "message": "Message",
-      "send": "Send Message"
-    },
-    "otherWays": "Other Ways to Reach Us",
-    "email": "Email: contact@pxtorem.org",
-    "twitter": "Twitter: @pxtoremconverter",
-    "github": "GitHub: github.com/pxtorem"
+    "description": "Get in touch with us"
   },
   "Index": {
     "title": "PX to REM Converter",
@@ -91,10 +110,19 @@
   "LocaleLayout": {
     "title": "PX to REM - {locale}"
   },
-  "Category": {
+  "Category": {  
     "title": "{category} Conversion Tool",
     "metaTitle": "{category} Converter - Free CSS Unit Tool",
-    "metaDescription": "Convert {category} units with our free online tool."
+    "metaDescription": "Convert {category} units with our free online tool.",
+    "px-to-rem": {
+      "title": "PX to REM Converter - Pixel to REM Conversion & Calculator",
+      "description": "Instantly convert PX to REM with our free online calculator. Easy PX to REM conversion and pixel to REM conversion. Ideal for responsive CSS design."
+    },
+    "rem-to-px": {
+      "title": "REM to Pixels Converter - Accurate REM/REMs to PX Tool",
+      "description": "Need to convert REM or REMs to pixels? Our free online tool provides accurate and fast conversions. Perfect for CSS design and debugging."
+    },
+    "copyCSS": "Copy CSS"
   },
   "Slug": {
     "metaTitle": "{category} Converter - {slug}",
@@ -108,12 +136,12 @@
   },
   "CategoryIntro": {
     "px-to-rem": {
-      "title": "PX to REM Converter",
-      "description": "Convert pixels (px) to rem units instantly. Perfect for responsive web design."
+      "title": "PX to REM Converter - Free CSS Unit Tool",
+      "description": "Convert pixels to REM units instantly with our free online PX to REM converter. Perfect for responsive web design and scalable CSS."
     },
     "rem-to-px": {
-      "title": "REM to PX Converter",
-      "description": "Convert rem units to pixels (px) quickly and accurately."
+      "title": "REM to PX Converter - Free CSS Unit Tool",
+      "description": "Convert REM units to pixels instantly with our free online REM to PX converter. Ideal for debugging and implementing pixel-perfect designs."
     },
     "em-to-px": {
       "title": "EM to PX Converter",

@@ -17,9 +17,22 @@ export default function CategoryIntro({ category }: CategoryIntroProps) {
   });
 
   return (
-    <div className="max-w-4xl mx-auto">
-      <h1 className="text-4xl font-bold text-gray-900 mb-4">{title}</h1>
-      <p className="text-lg text-gray-600">{description}</p>
+    <div className="max-w-4xl mx-auto text-center">
+      <h1 className="text-3xl font-bold text-gray-900 mb-4">{title}</h1>
+      <p className="text-lg text-gray-600 mb-6 max-w-3xl mx-auto">{description}</p>
+      
+      {/* 增加针对不同类别的更详细介绍 */}
+      {category === 'px-to-rem' && (
+        <p className="text-gray-700 max-w-3xl mx-auto">
+          Struggling with fixed pixel sizes in your CSS? Our free PX to REM converter makes it easy to switch to scalable REM units, ensuring your designs adapt seamlessly to any screen size. Whether you're designing typography, layouts, or spacing, this tool simplifies your workflow.
+        </p>
+      )}
+      
+      {category === 'rem-to-px' && (
+        <p className="text-gray-700 max-w-3xl mx-auto">
+          Need to verify exact pixel values for your designs? Our REM to PX converter helps you debug layouts and ensure pixel-perfect implementation. Convert REM units back to pixels for precise measurements and alignment.
+        </p>
+      )}
     </div>
   );
 } 

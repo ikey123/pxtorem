@@ -2,7 +2,7 @@
 import { getRequestConfig } from 'next-intl/server'; // 显式导入 getRequestConfig
 
 // 直接定义常量，不需要从外部导入
-export const locales = ['en', 'es'] as const;
+export const locales = ['en', 'es'] as const;// 保留西班牙语
 export const defaultLocale = 'en';
 export const validCategories = [
   'px-to-rem',

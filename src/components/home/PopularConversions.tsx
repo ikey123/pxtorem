@@ -1,9 +1,8 @@
 import Link from 'next/link';
-import { useTranslations, useLocale } from 'next-intl';
+import { useTranslations } from 'next-intl';
 
 export default function PopularConversions() {
   const t = useTranslations();
-  const locale = useLocale(); // 获取当前语言
   
   const pxToRemConversions = [
     { px: 16, slug: '16-px-to-rem' },
@@ -32,7 +31,7 @@ export default function PopularConversions() {
           {pxToRemConversions.map((item) => (
             <Link 
               key={item.slug}
-              href={`/${locale}/px-to-rem/${item.slug}`}
+              href={`/px-to-rem/${item.slug}`}
               className="px-4 py-2 bg-gray-50 hover:bg-gray-100 rounded-md text-gray-700 text-center transition-colors"
             >
               {item.px}px to rem
@@ -41,7 +40,7 @@ export default function PopularConversions() {
         </div>
         <div className="mt-4 text-center">
           <Link 
-            href={`/${locale}/px-to-rem`}
+            href="/px-to-rem"
             className="text-primary-600 hover:text-primary-800 font-medium"
           >
             {t('home.popular.viewMore')} &rarr;
@@ -56,7 +55,7 @@ export default function PopularConversions() {
           {remToPxConversions.map((item) => (
             <Link 
               key={item.slug}
-              href={`/${locale}/rem-to-px/${item.slug}`}
+              href={`/rem-to-px/${item.slug}`}
               className="px-4 py-2 bg-gray-50 hover:bg-gray-100 rounded-md text-gray-700 text-center transition-colors"
             >
               {item.rem}rem to px

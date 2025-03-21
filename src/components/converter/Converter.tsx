@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useTranslations } from 'next-intl';
-import { ClipboardIcon, CheckIcon } from '@heroicons/react/24/outline';
+import { ClipboardIcon, CheckIcon, ArrowsRightLeftIcon } from '@heroicons/react/24/outline';
 import { formatConversionResult, getPxToRemFormula, getRemToPxFormula } from '@/lib/unit-conversions';
 
 interface ConverterProps {
@@ -56,7 +56,7 @@ export default function Converter({
     }
   }, [value, fromUnit, toUnit, rootFontSize]);
   
-  // 切换单位
+  // Swap units
   const handleUnitSwitch = () => {
     setFromUnit(toUnit);
     setToUnit(fromUnit);
@@ -75,10 +75,11 @@ export default function Converter({
   };
   
   return (
-    <div className="bg-white rounded-lg shadow-md p-6">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div className="bg-white rounded-lg shadow-sm p-4 max-w-lg mx-auto">
+      {/* 转换输入和输出区 - 紧凑布局 */}
+      <div className="flex items-center space-x-2 mb-4">
         {/* 输入区域 */}
-        <div>
+        <div className="flex-1">
           <label htmlFor="value" className="block text-sm font-medium text-gray-700 mb-1">
             {t('from')}
           </label>
@@ -89,12 +90,12 @@ export default function Converter({
               value={value}
               onChange={(e) => setValue(e.target.value)}
               placeholder={t('inputPlaceholder')}
-              className="flex-grow px-4 py-2 border border-gray-300 rounded-l-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+              className="w-full px-3 py-2 text-base border border-gray-300 rounded-l-md shadow-sm focus:outline-none focus:ring-1 focus:ring-primary-500 focus:border-primary-500"
             />
             <select
               value={fromUnit}
               onChange={(e) => setFromUnit(e.target.value as 'px' | 'rem')}
-              className="px-3 py-2 border border-l-0 border-gray-300 bg-gray-50 rounded-r-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+              className="px-2 py-2 text-base border border-l-0 border-gray-300 bg-gray-50 rounded-r-md shadow-sm focus:outline-none focus:ring-1 focus:ring-primary-500 focus:border-primary-500"
             >
               <option value="px">px</option>
               <option value="rem">rem</option>
@@ -102,8 +103,17 @@ export default function Converter({
           </div>
         </div>
         
+        {/* 切换按钮 */}
+        <button
+          onClick={handleUnitSwitch}
+          className="mt-6 p-1 rounded-full hover:bg-gray-100 focus:outline-none"
+          title="Switch units"
+        >
+          <ArrowsRightLeftIcon className="h-4 w-4 text-gray-500" />
+        </button>
+        
         {/* 输出区域 */}
-        <div>
+        <div className="flex-1">
           <label htmlFor="result" className="block text-sm font-medium text-gray-700 mb-1">
             {t('to')}
           </label>
@@ -113,61 +123,61 @@ export default function Converter({
               id="result"
               value={result}
               readOnly
-              className="flex-grow px-4 py-2 border border-gray-300 rounded-l-md shadow-sm bg-gray-50"
+              className="w-full px-3 py-2 text-base border border-gray-300 rounded-l-md shadow-sm bg-gray-50"
             />
             <select
               value={toUnit}
               onChange={(e) => setToUnit(e.target.value as 'px' | 'rem')}
-              className="px-3 py-2 border border-l-0 border-gray-300 bg-gray-50 rounded-r-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+              className="px-2 py-2 text-base border border-l-0 border-gray-300 bg-gray-50 rounded-r-md shadow-sm focus:outline-none focus:ring-1 focus:ring-primary-500 focus:border-primary-500"
             >
               <option value="px">px</option>
               <option value="rem">rem</option>
             </select>
-            <button
-              onClick={handleCopy}
-              disabled={!result}
-              className="ml-2 px-3 py-2 bg-gray-100 border border-gray-300 rounded-md hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
-              title={t('copy')}
-            >
-              {copied ? (
-                <CheckIcon className="h-5 w-5 text-green-600" />
-              ) : (
-                <ClipboardIcon className="h-5 w-5 text-gray-600" />
-              )}
-            </button>
           </div>
         </div>
+        
+        {/* 复制按钮 */}
+        <button
+          onClick={handleCopy}
+          disabled={!result}
+          className="mt-6 p-1.5 rounded-md bg-gray-100 border border-gray-300 hover:bg-gray-200 focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed"
+          title={t('copy')}
+        >
+          {copied ? (
+            <CheckIcon className="h-4 w-4 text-green-600" />
+          ) : (
+            <ClipboardIcon className="h-4 w-4 text-gray-600" />
+          )}
+        </button>
       </div>
       
-      {/* 根字体大小调整 */}
-      <div className="mt-6">
-        <label htmlFor="rootFontSize" className="block text-sm font-medium text-gray-700 mb-1">
-          {t('rootFontSize')}
-        </label>
-        <div className="flex items-center">
-          <input
-            type="range"
-            id="rootFontSize"
-            min="8"
-            max="24"
-            step="1"
-            value={rootFontSize}
-            onChange={(e) => setRootFontSize(parseInt(e.target.value))}
-            className="flex-grow h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
-          />
-          <span className="ml-3 text-gray-700 font-medium">{rootFontSize}px</span>
-        </div>
+      {/* 根字体大小调整 - 更紧凑 */}
+      <div className="flex items-center space-x-2 mb-3">
+        <span className="text-sm font-medium text-gray-700 whitespace-nowrap">
+          {t('rootFontSize')}: {rootFontSize}px
+        </span>
+        <input
+          type="range"
+          min="8"
+          max="24"
+          step="1"
+          value={rootFontSize}
+          onChange={(e) => setRootFontSize(parseInt(e.target.value))}
+          className="flex-grow h-1.5 bg-gray-200 rounded-lg appearance-none cursor-pointer"
+        />
       </div>
       
-      {/* 结果和公式 */}
+      {/* 结果和公式 - 更紧凑 */}
       {result && (
-        <div className="mt-6 p-4 bg-gray-50 rounded-md">
-          <p className="text-lg font-medium text-gray-900">
-            {t('result', { value, from: fromUnit, result, to: toUnit })}
+        <div className="text-sm bg-gray-50 rounded-md p-2.5 border border-gray-100">
+          <p className="font-medium text-gray-900">
+            {value}{fromUnit} = {result}{toUnit}
           </p>
-          <p className="text-sm text-gray-600 mt-1">
-            {t('calculation', { formula })}
-          </p>
+          {formula && (
+            <p className="text-xs text-gray-600 mt-0.5">
+              {t('calculation', { formula })}
+            </p>
+          )}
         </div>
       )}
     </div>

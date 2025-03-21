@@ -4,6 +4,7 @@ interface DetailedExplanationProps {
   toUnit: string;
   result: string;
   rootFontSize: number;
+  slug: string;
 }
 
 export default function DetailedExplanation({
@@ -11,7 +12,8 @@ export default function DetailedExplanation({
   fromUnit,
   toUnit,
   result,
-  rootFontSize
+  rootFontSize,
+  slug
 }: DetailedExplanationProps) {
   // 计算在不同根字体大小下的结果
   const calculateResults = () => {
@@ -42,6 +44,49 @@ export default function DetailedExplanation({
     return num.toFixed(4).replace(/\.?0+$/, '');
   };
 
+  const getUsageScenario = () => {
+    switch (slug) {
+      case '1-rem-to-px':
+        return (
+          <>
+            <p>
+              1rem 是 REM 单位的基础值，常用于设置基准字体大小或间距。以 16px 的根字体大小计算，1rem = 16px。这是测试转换器核心功能的关键用例。
+            </p>
+            <pre className="bg-gray-100 p-2 rounded mt-2">{`body { font-size: 1rem; /* 16px */ }`}</pre>
+          </>
+        );
+      case '0-5-rem-to-px':
+        return (
+          <>
+            <p>
+              0.5rem 是一个常见的小数值 REM，常用于微调间距或小型元素。测试结果应为 8px（基于 16px 根字体），验证小数转换的准确性。
+            </p>
+            <pre className="bg-gray-100 p-2 rounded mt-2">{`small { margin: 0.5rem; /* 8px */ }`}</pre>
+          </>
+        );
+      case '1-5-rem-to-px':
+        return (
+          <>
+            <p>
+              1.5rem 是一个常见的中间值，通常用于行高或标题间距。测试结果应为 24px（基于 16px 根字体），验证中间值转换。
+            </p>
+            <pre className="bg-gray-100 p-2 rounded mt-2">{`p { line-height: 1.5rem; /* 24px */ }`}</pre>
+          </>
+        );
+      case '16-px-to-rem':
+        return (
+          <>
+            <p>
+              16px 是浏览器的默认字体大小，转换为 REM 应为 1rem（基于 16px 根字体）。此测试验证从像素到 REM 的双向转换功能。
+            </p>
+            <pre className="bg-gray-100 p-2 rounded mt-2">{`html { font-size: 16px; } div { padding: 1rem; }`}</pre>
+          </>
+        );
+      default:
+        return <p>此转换适用于多种设计场景，具体取决于您的项目需求。</p>;
+    }
+  };
+
   return (
     <div className="space-y-6">
       <h3 className="text-2xl font-bold text-gray-900">
@@ -61,11 +106,7 @@ export default function DetailedExplanation({
             : `${value}rem × ${rootFontSize}px = ${result}px`}
         </div>
 
-        <p>
-          {fromUnit === 'px'
-            ? `This means that ${value}px is equivalent to ${result}rem when the root font size is ${rootFontSize}px.`
-            : `This means that ${value}rem is equivalent to ${result}px when the root font size is ${rootFontSize}px.`}
-        </p>
+        {getUsageScenario()}
 
         <h4>Results with Different Root Font Sizes</h4>
         <p>

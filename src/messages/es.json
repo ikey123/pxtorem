@@ -66,8 +66,24 @@
   },
   "footer": {
     "popularLinks": "Conversiones Populares",
-    "contact": "Contacto",
+    "navigation": "Navegación",
     "language": "Idioma",
+    "about": "Acerca de",
+    "contact": "Contacto",
+    "home": "Inicio",
+    "moreUnits": "Más Unidades (Próximamente)",
+    "english": "Inglés",
+    "spanish": "Español",
+    "pxToRem": "PX a REM",
+    "remToPx": "REM a PX",
+    "popularLinksItems": {
+      "px16": "16px a rem",
+      "px10": "10px a rem",
+      "px20": "20px a rem",
+      "rem1": "1rem a px",
+      "rem1_5": "1.5rem a px",
+      "rem2": "2rem a px"
+    },
     "copyright": "© {year} pxtorem.org. Todos los derechos reservados."
   },
   "about": {

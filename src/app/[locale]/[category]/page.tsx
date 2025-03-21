@@ -9,9 +9,7 @@ type CategoryParams = {
   params: Promise<{ locale: string; category: string }>;
 };
 
-export async function generateMetadata({ 
-  params 
-}: CategoryParams): Promise<Metadata> {
+export async function generateMetadata({ params }: CategoryParams): Promise<Metadata> {
   const { locale, category } = await params;
   const effectiveLocale = locales.includes(locale) ? locale : defaultLocale;
 
@@ -29,12 +27,28 @@ export async function generateMetadata({
   try {
     const t = await getTranslations({ locale: effectiveLocale, namespace: 'Category' });
     return {
-      title: t('metaTitle', { category }),
-      description: t('metaDescription', { category }),
+      title: {
+        absolute: t(`${category}.title`),
+      },
+      description: t(`${category}.description`),
     };
   } catch (error) {
     console.error('generateMetadata 错误:', error);
-    return { title: `${category} Converter`, description: `Convert ${category} units` };
+    if (category === 'px-to-rem') {
+      return {
+        title: { absolute: "PX to REM Converter - Pixel to REM Conversion & Calculator" },
+        description: "Instantly convert PX to REM with our free online calculator. Easy PX to REM conversion and pixel to REM conversion. Ideal for responsive CSS design."
+      };
+    } else if (category === 'rem-to-px') {
+      return {
+        title: { absolute: "REM to Pixels Converter - Accurate REM/REMs to PX Tool" },
+        description: "Need to convert REM or REMs to pixels? Our free online tool provides accurate and fast conversions. Perfect for CSS design and debugging."
+      };
+    }
+    return { 
+      title: { absolute: `${category} Converter` }, 
+      description: `Convert ${category} units` 
+    };
   }
 }
 

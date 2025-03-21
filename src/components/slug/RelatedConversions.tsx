@@ -25,77 +25,26 @@ export default function RelatedConversions({ category, currentSlug }: RelatedCon
   const relatedValues = [];
   
   if (category === 'px-to-rem') {
-    // 对于px，生成附近的值
-    const baseValues = [8, 10, 12, 14, 16, 18, 20, 24, 32, 48, 64];
-    
-    // 找到当前值在数组中的位置，或者最接近的位置
-    let index = baseValues.indexOf(currentValue);
-    if (index === -1) {
-      // 如果不在数组中，找到最接近的值
-      for (let i = 0; i < baseValues.length; i++) {
-        if (baseValues[i] > currentValue) {
-          index = i;
-          break;
-        }
-      }
-      if (index === -1) index = baseValues.length;
-    }
-    
-    // 获取前后的值
-    const start = Math.max(0, index - 3);
-    const end = Math.min(baseValues.length, index + 4);
-    
-    for (let i = start; i < end; i++) {
-      if (baseValues[i] !== currentValue) {
-        relatedValues.push({
-          value: baseValues[i],
-          slug: `${baseValues[i]}-px-to-rem`
-        });
-      }
-    }
+    const baseValues = [10, 12, 16, 20];
+    baseValues.forEach(val => {
+      if (val !== currentValue) relatedValues.push({ value: val, slug: `${val}-px-to-rem`, label: `${val}px to rem` });
+    });
   } else {
-    // 对于rem，生成附近的值
-    const baseValues = [0.25, 0.5, 0.75, 1, 1.25, 1.5, 2, 2.5, 3, 4, 5];
-    
-    // 找到当前值在数组中的位置，或者最接近的位置
-    let index = baseValues.indexOf(currentValue);
-    if (index === -1) {
-      // 如果不在数组中，找到最接近的值
-      for (let i = 0; i < baseValues.length; i++) {
-        if (baseValues[i] > currentValue) {
-          index = i;
-          break;
-        }
-      }
-      if (index === -1) index = baseValues.length;
-    }
-    
-    // 获取前后的值
-    const start = Math.max(0, index - 3);
-    const end = Math.min(baseValues.length, index + 4);
-    
-    for (let i = start; i < end; i++) {
-      if (baseValues[i] !== currentValue) {
-        relatedValues.push({
-          value: baseValues[i],
-          slug: `${baseValues[i].toString().replace('.', '-')}-rem-to-px`
-        });
-      }
-    }
+    const baseValues = [0.5, 1, 1.5, 2];
+    baseValues.forEach(val => {
+      if (val !== currentValue) relatedValues.push({ value: val, slug: `${val.toString().replace('.', '-')}-rem-to-px`, label: `${val}rem to px` });
+    });
   }
   
   return (
-    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-      {relatedValues.map((item) => (
+    <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+      {relatedValues.slice(0, 4).map((item) => (
         <Link 
           key={item.slug}
           href={`/${category}/${item.slug}`}
           className="px-4 py-3 bg-white hover:bg-gray-50 border border-gray-200 rounded-md text-gray-700 text-center transition-colors shadow-sm"
         >
-          {category === 'px-to-rem' 
-            ? `${item.value}px to rem`
-            : `${item.value}rem to px`
-          }
+          {item.label}
         </Link>
       ))}
     </div>

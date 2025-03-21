@@ -11,9 +11,10 @@ export default function LanguageSwitcher() {
   const router = useRouter();
   const pathname = usePathname();
   
+  // 临时只保留英文，注释掉西班牙语
   const locales = [
     { code: 'en', label: 'English' },
-    { code: 'es', label: 'Español' }
+    // { code: 'es', label: 'Español' } // 保留代码，注释以便后续恢复
   ];
 
   const handleLocaleChange = (newLocale: string) => {
