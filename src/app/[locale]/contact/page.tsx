@@ -1,8 +1,14 @@
 import { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
 
-export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
-  const t = await getTranslations('contact');
+// 使用 Promise 类型
+interface ContactPageProps {
+  params: Promise<{ locale: string }>;
+}
+
+export async function generateMetadata({ params }: ContactPageProps): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: 'contact' });
 
   return {
     title: t('title'),
@@ -10,8 +16,9 @@ export async function generateMetadata({ params }: { params: { locale: string } 
   };
 }
 
-export default async function ContactPage({ params }: { params: { locale: string } }) {
-  const t = await getTranslations('contact');
+export default async function ContactPage({ params }: ContactPageProps) {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: 'contact' });
 
   return (
     <div className="container mx-auto px-4 py-8">

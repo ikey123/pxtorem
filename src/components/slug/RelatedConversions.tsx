@@ -5,6 +5,13 @@ interface RelatedConversionsProps {
   currentSlug: string;
 }
 
+// 定义 relatedValues 数组中元素的类型
+interface RelatedValue {
+  value: number;
+  slug: string;
+  label: string;
+}
+
 export default function RelatedConversions({ category, currentSlug }: RelatedConversionsProps) {
   // 获取当前值
   let currentValue = 0;
@@ -22,7 +29,7 @@ export default function RelatedConversions({ category, currentSlug }: RelatedCon
   }
   
   // 生成相关转换
-  const relatedValues = [];
+  const relatedValues: RelatedValue[] = [];
   
   if (category === 'px-to-rem') {
     const baseValues = [10, 12, 16, 20];

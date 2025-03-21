@@ -19,6 +19,9 @@ export default function LanguageSwitcher() {
 
   const handleLocaleChange = (newLocale: string) => {
     // 将当前路径中的 locale 部分替换为新的 locale
+    // 添加空值检查，确保 pathname 不为 null
+    if (!pathname) return;
+    
     const pathWithoutLocale = pathname.replace(`/${locale}`, '');
     const newPath = `/${newLocale}${pathWithoutLocale}`;
     

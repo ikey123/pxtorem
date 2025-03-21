@@ -7,6 +7,14 @@ import Footer from '@/components/layout/Footer';
 import { locales, defaultLocale } from '@/i18n/request';
 import { inter } from '@/app/fonts';
 
+// 定义 Locale 类型，确保与 locales 数组一致
+type Locale = typeof locales[number];
+
+// 类型守卫函数
+function isLocale(value: string): value is Locale {
+  return (locales as readonly string[]).includes(value);
+}
+
 export const metadata: Metadata = {
   title: {
     default: 'PX to REM Converter - Free CSS Unit Tool',
@@ -24,7 +32,8 @@ export default async function LocaleLayout({
 }) {
   try {
     const { locale: rawLocale } = await params;
-    const locale = locales.includes(rawLocale) ? rawLocale : defaultLocale;
+    // 使用类型守卫确保 rawLocale 是 Locale 类型
+    const locale: Locale = isLocale(rawLocale) ? rawLocale : defaultLocale;
     
     console.log(`Layout - 原始语言: ${rawLocale}, 解析后语言: ${locale}`);
     
@@ -35,7 +44,7 @@ export default async function LocaleLayout({
 
     // 动态生成 Canonical URL
     const canonicalBase = 'https://pxtorem.org';
-    const canonicalPath = locale === defaultLocale ? '' : `/${locale}`; // 默认语言（en）不加前缀
+    const canonicalPath = locale === defaultLocale ? '' : `/${locale}`;
     const canonicalUrl = `${canonicalBase}${canonicalPath}`;
 
     return (

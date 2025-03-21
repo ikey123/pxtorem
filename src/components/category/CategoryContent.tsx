@@ -22,10 +22,9 @@ export default function CategoryContent({ locale, category }: CategoryContentPro
       {/* 转换器部分 */}
       <div className="my-8">
         <Converter 
-          conversionType={category} 
           initialFromUnit={category === 'px-to-rem' ? 'px' : 'rem'} 
           initialToUnit={category === 'px-to-rem' ? 'rem' : 'px'}
-          initialValue={category === 'px-to-rem' ? 16 : 1}
+          initialValue={category === 'px-to-rem' ? '16' : '1'}
         />
       </div>
       
@@ -95,7 +94,7 @@ export default function CategoryContent({ locale, category }: CategoryContentPro
               <Converter 
                 initialFromUnit={category === 'px-to-rem' ? 'px' : 'rem'} 
                 initialToUnit={category === 'px-to-rem' ? 'rem' : 'px'} 
-                locale={locale} 
+                initialValue={category === 'px-to-rem' ? '16' : '1'}
               />
             </div>
           </div>

@@ -5,13 +5,28 @@ import { notFound } from 'next/navigation';
 import { locales, defaultLocale, validCategories } from '@/i18n/request';
 import CategoryContent from '@/components/category/CategoryContent';
 
+// 定义类型
+type Locale = typeof locales[number];
+type ValidCategory = typeof validCategories[number];
+
+// 类型守卫函数
+function isLocale(value: string): value is Locale {
+  return (locales as readonly string[]).includes(value);
+}
+
+function isValidCategory(value: string): value is ValidCategory {
+  return (validCategories as readonly string[]).includes(value);
+}
+
 type CategoryParams = {
   params: Promise<{ locale: string; category: string }>;
 };
 
-export async function generateMetadata({ params }: CategoryParams): Promise<Metadata> {
+export async function generateMetadata({
+  params
+}: CategoryParams): Promise<Metadata> {
   const { locale, category } = await params;
-  const effectiveLocale = locales.includes(locale) ? locale : defaultLocale;
+  const effectiveLocale: Locale = isLocale(locale) ? locale : defaultLocale;
 
   // 检查是否可能是 slug 误识别为类别
   if (category.match(/^\d+-px-to-rem$/) || category.match(/^\d+(?:-\d+)?-rem-to-px$/)) {
@@ -19,7 +34,7 @@ export async function generateMetadata({ params }: CategoryParams): Promise<Meta
     return { title: 'Invalid Category', description: 'This is a conversion value, not a category' };
   }
 
-  if (!validCategories.includes(category)) {
+  if (!isValidCategory(category)) {
     console.warn(`无效的类别 in generateMetadata: ${category}`);
     return { title: 'Category Not Found', description: 'The requested category does not exist' };
   }
@@ -27,36 +42,20 @@ export async function generateMetadata({ params }: CategoryParams): Promise<Meta
   try {
     const t = await getTranslations({ locale: effectiveLocale, namespace: 'Category' });
     return {
-      title: {
-        absolute: t(`${category}.title`),
-      },
-      description: t(`${category}.description`),
+      title: t('metaTitle', { category }),
+      description: t('metaDescription', { category }),
     };
   } catch (error) {
     console.error('generateMetadata 错误:', error);
-    if (category === 'px-to-rem') {
-      return {
-        title: { absolute: "PX to REM Converter - Pixel to REM Conversion & Calculator" },
-        description: "Instantly convert PX to REM with our free online calculator. Easy PX to REM conversion and pixel to REM conversion. Ideal for responsive CSS design."
-      };
-    } else if (category === 'rem-to-px') {
-      return {
-        title: { absolute: "REM to Pixels Converter - Accurate REM/REMs to PX Tool" },
-        description: "Need to convert REM or REMs to pixels? Our free online tool provides accurate and fast conversions. Perfect for CSS design and debugging."
-      };
-    }
-    return { 
-      title: { absolute: `${category} Converter` }, 
-      description: `Convert ${category} units` 
-    };
+    return { title: `${category} Converter`, description: `Convert ${category} units` };
   }
 }
 
-export default async function CategoryPage({ 
-  params 
+export default async function CategoryPage({
+  params
 }: CategoryParams) {
   const { locale, category } = await params;
-  const effectiveLocale = locales.includes(locale) ? locale : defaultLocale;
+  const effectiveLocale: Locale = isLocale(locale) ? locale : defaultLocale;
   console.log(`CategoryPage - 原始语言: ${locale}, 类别: ${category}, 解析后语言: ${effectiveLocale}`);
 
   // 检查是否可能是 slug 误识别为类别
@@ -65,15 +64,14 @@ export default async function CategoryPage({
     notFound(); // 触发 404，交给 [slug] 页面
   }
 
-  if (!validCategories.includes(category)) {
+  if (!isValidCategory(category)) {
     console.warn(`无效的类别: ${category}`);
     notFound();
   }
 
   try {
-    const t = await getTranslations({ locale: effectiveLocale, namespace: 'Category' });
-    const title = t('title', { category });
-    return <CategoryContent locale={effectiveLocale} category={category} title={title} />;
+    // 只将所需的属性传递给 CategoryContent
+    return <CategoryContent locale={effectiveLocale} category={category} />;
   } catch (error) {
     console.error('CategoryPage 错误:', error);
     return <div className="container mx-auto px-4 py-8">加载错误，请稍后再试。</div>;

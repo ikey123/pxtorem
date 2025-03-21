@@ -51,10 +51,10 @@ export default function HomeContent({ locale }: { locale: string }) {
           <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
             CSS Unit Converter: PX to REM, REM to PX, and More
           </h1>
-          <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
-            Instantly convert between PX to REM, REM to PX, and other CSS units with our free online tool. Whether you’re designing responsive layouts or ensuring accessibility, our converter simplifies your workflow. Try it now and see how easy it is to switch from PX to REM or REM to PX!
+          <p className="text-lg mb-8 text-gray-600">
+            Instantly convert between PX to REM, REM to PX, and other CSS units with our free online tool. Whether you're designing responsive layouts or ensuring accessibility, our converter simplifies your workflow. Try it now and see how easy it is to switch from PX to REM or REM to PX!
           </p>
-          <Converter locale={locale} />
+          <Converter />
         </div>
       </section>
 
@@ -110,7 +110,7 @@ export default function HomeContent({ locale }: { locale: string }) {
             <div className="p-6 bg-gray-50 rounded-lg shadow-md">
               <h3 className="text-xl font-semibold mb-4">Future-Ready for More Units</h3>
               <p>
-                Beyond PX to REM and REM to PX, our tool is built to expand. Soon, you’ll convert to EM, VH, VW, and more, making it your go-to resource for all CSS unit conversions.
+                Beyond PX to REM and REM to PX, our tool is built to expand. Soon, you'll convert to EM, VH, VW, and more, making it your go-to resource for all CSS unit conversions.
               </p>
             </div>
           </div>
@@ -122,7 +122,7 @@ export default function HomeContent({ locale }: { locale: string }) {
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">Why Use PX to REM and REM to PX?</h2>
           <p className="mb-6 max-w-3xl mx-auto">
-            Choosing between PX to REM or REM to PX depends on your project’s needs. Pixels (PX) offer fixed, predictable sizing, while REM units scale dynamically with the root font size, enhancing accessibility and responsiveness. Our tool bridges these units seamlessly, helping you optimize your CSS workflow. Whether you’re converting PX to REM for scalable layouts or REM to PX for precise debugging, we’ve got you covered.
+            Choosing between PX to REM or REM to PX depends on your project's needs. Pixels (PX) offer fixed, predictable sizing, while REM units scale dynamically with the root font size, enhancing accessibility and responsiveness. Our tool bridges these units seamlessly, helping you optimize your CSS workflow. Whether you're converting PX to REM for scalable layouts or REM to PX for precise debugging, we've got you covered.
           </p>
           <ul className="list-disc pl-6 max-w-3xl mx-auto">
             <li>Improve accessibility with REM units that respect user font preferences.</li>
@@ -138,7 +138,7 @@ export default function HomeContent({ locale }: { locale: string }) {
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">What Are PX and REM Units?</h2>
           <p className="mb-6 max-w-3xl mx-auto">
-            In CSS, PX (pixels) and REM (root em) are essential units for sizing elements. PX represents a fixed length, typically tied to screen pixels, making it ideal for precise control. REM, however, is relative to the root element’s font size (usually 16px by default), offering flexibility for responsive designs. Converting PX to REM or REM to PX helps developers balance precision and scalability in their projects.
+            In CSS, PX (pixels) and REM (root em) are essential units for sizing elements. PX represents a fixed length, typically tied to screen pixels, making it ideal for precise control. REM, however, is relative to the root element's font size (usually 16px by default), offering flexibility for responsive designs. Converting PX to REM or REM to PX helps developers balance precision and scalability in their projects.
           </p>
           <p className="max-w-3xl mx-auto">
             For example, if the root font size is 16px, then 16px converts to 1rem, and 1.5rem converts to 24px. Our PX to REM and REM to PX converter automates these calculations, saving you time and ensuring accuracy.
@@ -151,7 +151,7 @@ export default function HomeContent({ locale }: { locale: string }) {
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">How Our Converter Works</h2>
           <p className="mb-6 max-w-3xl mx-auto">
-            Using our PX to REM and REM to PX converter is straightforward. Enter your value, select your units, and get instant results. Here’s how it works:
+            Using our PX to REM and REM to PX converter is straightforward. Enter your value, select your units, and get instant results. Here's how it works:
           </p>
           <ol className="list-decimal pl-6 max-w-3xl mx-auto">
             <li>Input your PX or REM value in the provided field.</li>
@@ -160,7 +160,7 @@ export default function HomeContent({ locale }: { locale: string }) {
             <li>Get your result instantly—no manual math required!</li>
           </ol>
           <p className="mt-6 max-w-3xl mx-auto">
-            Whether you’re adjusting a design from PX to REM or verifying a REM to PX value, our tool ensures precision every time.
+            Whether you're adjusting a design from PX to REM or verifying a REM to PX value, our tool ensures precision every time.
           </p>
         </div>
       </section>
@@ -171,7 +171,7 @@ export default function HomeContent({ locale }: { locale: string }) {
           <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">What Developers Say</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
             <div className="p-6 bg-gray-50 rounded-lg shadow-md">
-              <p className="italic">"This PX to REM converter saved me hours of manual calculations. It’s a must-have for responsive design!"</p>
+              <p className="italic">"This PX to REM converter saved me hours of manual calculations. It's a must-have for responsive design!"</p>
               <p className="mt-4 font-semibold">— Sarah, Frontend Developer</p>
             </div>
             <div className="p-6 bg-gray-50 rounded-lg shadow-md">

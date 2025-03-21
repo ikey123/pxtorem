@@ -9,6 +9,19 @@ const SLUG_PATTERNS = {
   remToPx: /^\d+(?:-\d+)?-rem-to-px$/,
 } as const;
 
+// 定义类型
+type Locale = typeof locales[number];
+type ValidCategory = typeof validCategories[number];
+
+// 类型守卫函数
+function isLocale(value: string): value is Locale {
+  return (locales as readonly string[]).includes(value);
+}
+
+function isValidCategory(value: string): value is ValidCategory {
+  return (validCategories as readonly string[]).includes(value);
+}
+
 export default createMiddleware({
   locales: [
     'en',
@@ -46,13 +59,13 @@ export function middleware(request: NextRequest) {
   const firstSegment = segments[0];
   
   // 如果已有语言前缀，放行
-  if (locales.includes(firstSegment)) {
+  if (isLocale(firstSegment)) {
     console.log(`[Middleware] 已有语言前缀 ${firstSegment}，直接通过: ${pathname}`);
     return NextResponse.next();
   }
   
   // 处理类别+slug组合
-  if (validCategories.includes(firstSegment) && segments.length > 1) {
+  if (isValidCategory(firstSegment) && segments.length > 1) {
     const secondSegment = segments[1];
     const isValidSlug = SLUG_PATTERNS.pxToRem.test(secondSegment) || 
                         SLUG_PATTERNS.remToPx.test(secondSegment);

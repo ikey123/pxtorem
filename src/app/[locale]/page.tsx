@@ -9,6 +9,14 @@ import { notFound, redirect } from "next/navigation";
 import { locales, defaultLocale } from "@/i18n/request";
 import HomeContent from "@/components/home/HomeContent";
 
+// 定义 Locale 类型
+type Locale = typeof locales[number];
+
+// 类型守卫函数
+function isLocale(value: string): value is Locale {
+  return (locales as readonly string[]).includes(value);
+}
+
 type PageParams = {
   params: Promise<{ locale: string }>;
 };
@@ -29,8 +37,8 @@ export async function generateMetadata({
   try {
     const { locale } = await params;
     
-    // 使用有效的语言或默认回退
-    const effectiveLocale = locales.includes(locale) ? locale : defaultLocale;
+    // 使用类型守卫确保 locale 是有效的 Locale 类型
+    const effectiveLocale: Locale = isLocale(locale) ? locale : defaultLocale;
     
     // 获取翻译
     const t = await getTranslations({ locale: effectiveLocale, namespace: "common" });
@@ -55,10 +63,11 @@ export default async function Home({
   try {
     const { locale } = await params;
     
-    console.log(`Home - 原始语言: ${locale}, 解析后语言: ${locales.includes(locale) ? locale : defaultLocale}`);
+    // 使用类型守卫确保 locale 是有效的 Locale 类型
+    const effectiveLocale: Locale = isLocale(locale) ? locale : defaultLocale;
     
-    // 使用有效的语言或默认回退
-    const effectiveLocale = locales.includes(locale) ? locale : defaultLocale;
+    // 使用类型安全的 effectiveLocale 变量
+    console.log(`Home - 原始语言: ${locale}, 解析后语言: ${effectiveLocale}`);
     
     // 渲染主页内容
     return <HomeContent locale={effectiveLocale} />;

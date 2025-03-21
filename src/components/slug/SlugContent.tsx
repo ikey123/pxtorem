@@ -51,10 +51,9 @@ export default function SlugContent({
       <h1 className="text-3xl font-bold mb-6">{title}</h1>
       {getIntro()}
       <Converter 
-        initialValue={initialValue} 
+        initialValue={initialValue.toString()}
         initialFromUnit={category === 'px-to-rem' ? 'px' : 'rem'} 
         initialToUnit={category === 'px-to-rem' ? 'rem' : 'px'} 
-        locale={locale} 
       />
     </div>
   );
