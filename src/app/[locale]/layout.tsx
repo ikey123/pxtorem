@@ -19,12 +19,12 @@ export default async function LocaleLayout({
   params,
   children,
 }: {
-  params: { locale: string };
+  params: Promise<{ locale: string }>;
   children: React.ReactNode;
 }) {
   try {
-    const { locale: rawLocale } = params;
-    const locale = rawLocale && locales.includes(rawLocale) ? rawLocale : defaultLocale;
+    const { locale: rawLocale } = await params;
+    const locale = locales.includes(rawLocale) ? rawLocale : defaultLocale;
     
     console.log(`Layout - 原始语言: ${rawLocale}, 解析后语言: ${locale}`);
     
