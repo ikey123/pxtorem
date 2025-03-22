@@ -19,7 +19,6 @@ export default function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
   console.log(`[Middleware] 处理路径: ${pathname}`);
 
-  // 跳过静态资源
   if (pathname.startsWith('/_next') || pathname.startsWith('/api') || pathname.includes('.')) {
     console.log(`[Middleware] 跳过静态资源: ${pathname}`);
     return NextResponse.next();
