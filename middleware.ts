@@ -1,6 +1,23 @@
+// middleware.ts
+import { NextRequest, NextResponse } from 'next/server';
+import { locales, defaultLocale } from './src/i18n/request';
+import createMiddleware from 'next-intl/middleware';
+
+type Locale = typeof locales[number];
+
+function isLocale(value: string): value is Locale {
+  return (locales as readonly string[]).includes(value);
+}
+
+const intlMiddleware = createMiddleware({
+  locales: ['en', 'es'],
+  defaultLocale: 'en',
+  localePrefix: 'always',
+});
+
 export default function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
-  console.log(`[Middleware] 开始处理路径: ${pathname}`);
+  console.log(`[Middleware] 处理路径: ${pathname}`);
 
   if (pathname.startsWith('/_next') || pathname.startsWith('/api') || pathname.includes('.')) {
     console.log(`[Middleware] 跳过静态资源: ${pathname}`);
@@ -15,19 +32,17 @@ export default function middleware(request: NextRequest) {
   }
 
   const segments = pathname.split('/').filter(Boolean);
-  if (segments.length === 0) {
-    console.log(`[Middleware] 根路径 /，直接通过`);
-    return NextResponse.next();
-  }
-
   const firstSegment = segments[0];
+
   if (isLocale(firstSegment) && firstSegment !== 'en') {
-    console.log(`[Middleware] 已有语言前缀 ${firstSegment}，交给 next-intl 处理: ${pathname}`);
+    console.log(`[Middleware] 语言前缀 ${firstSegment}: ${pathname}`);
     return intlMiddleware(request);
   }
 
-  console.log(`[Middleware] 无前缀路径，直接通过: ${pathname}`);
-  const response = NextResponse.next();
-  console.log(`[Middleware] 处理结果: ${response.status}`); // 添加状态日志
-  return response;
+  console.log(`[Middleware] 无前缀路径: ${pathname}`);
+  return NextResponse.next();
 }
+
+export const config = {
+  matcher: ['/((?!api|_next|_vercel|.*\\..*).*)'],
+};

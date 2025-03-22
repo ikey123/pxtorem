@@ -1,4 +1,4 @@
-// src/app/[locale]/[category]/[slug]/page.tsx
+// src/app/[locale]/[category]/page.tsx
 import { getTranslations } from 'next-intl/server';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
@@ -17,44 +17,36 @@ function isValidCategory(value: string): value is ValidCategory {
 }
 
 type CategoryParams = {
-  params: Promise<{ locale: string; category: string; slug?: string }>;
+  params: Promise<{ locale: string; category: string }>;
 };
 
 export async function generateMetadata({ params }: CategoryParams): Promise<Metadata> {
-  const { locale, category, slug } = await params;
+  const { locale, category } = await params;
   const effectiveLocale: Locale = isLocale(locale) ? locale : defaultLocale;
   const effectiveCategory = isValidCategory(category) ? category : isValidCategory(locale) ? locale : notFound();
-  const effectiveSlug = slug || '';
 
-  console.log(`[Slug] Metadata - locale=${locale}, category=${category}, slug=${slug}`);
+  console.log(`[Category] Metadata - locale=${locale}, category=${category}`);
   return {
-    title: `${effectiveCategory.toUpperCase()} Converter${effectiveSlug ? `: ${effectiveSlug}` : ''}`,
+    title: `${effectiveCategory.toUpperCase()} Converter`,
     description: `Convert ${effectiveCategory} units`,
   };
 }
 
 export default async function CategoryPage({ params }: CategoryParams) {
-  const { locale, category, slug } = await params;
+  const { locale, category } = await params;
   const effectiveLocale: Locale = isLocale(locale) ? locale : defaultLocale;
   const effectiveCategory = isValidCategory(category) ? category : isValidCategory(locale) ? locale : notFound();
-  const effectiveSlug = slug || '';
+  const effectiveSlug = '';
 
-  console.log(`[Slug] - locale=${locale}, category=${category}, slug=${slug}, effectiveLocale=${effectiveLocale}, effectiveCategory=${effectiveCategory}, effectiveSlug=${effectiveSlug}`);
-
-  let initialValue = 16;
-  if (effectiveSlug) {
-    const numMatch = effectiveSlug.match(/^(\d+(?:-\d+)?)/);
-    if (numMatch) initialValue = parseFloat(numMatch[1].replace('-', '.'));
-  }
-
-  const title = `${effectiveCategory.toUpperCase()} Converter${effectiveSlug ? `: ${effectiveSlug}` : ''}`;
+  console.log(`[Category] - locale=${locale}, category=${category}, effectiveLocale=${effectiveLocale}, effectiveCategory=${effectiveCategory}`);
+  const title = `${effectiveCategory.toUpperCase()} Converter`;
   return (
     <SlugContent
       locale={effectiveLocale}
       category={effectiveCategory}
       slug={effectiveSlug}
       title={title}
-      initialValue={initialValue}
+      initialValue={16}
     />
   );
 }
