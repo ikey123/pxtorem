@@ -8,11 +8,20 @@ const nextIntlConfig = withNextIntl('./src/i18n/request.ts');
 const nextConfig = {
   reactStrictMode: true,
   
-  // 移除 experimental.middleware
-  
-  // 禁用默认重定向，让中间件处理
+  // 添加重定向规则作为中间件的备份
   async redirects() {
-    return [];
+    return [
+      {
+        source: '/en',
+        destination: '/',
+        permanent: true,
+      },
+      {
+        source: '/en/:path*',
+        destination: '/:path*',
+        permanent: true,
+      }
+    ];
   },
   
   // 图像优化配置
