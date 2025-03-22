@@ -42,7 +42,6 @@ export default function middleware(request: NextRequest) {
     return intlMiddleware(request);
   }
 
-  // 无前缀路径直接通过（如 /rem-to-px）
   console.log(`[Middleware] 无前缀路径: ${pathname}`);
   return NextResponse.next();
 }
