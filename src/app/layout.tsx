@@ -7,7 +7,7 @@ import Footer from '@/components/layout/Footer';
 import { locales, defaultLocale } from '@/i18n/request';
 import { inter } from '@/app/fonts';
 
-// 定义 Locale 类型，确保与 locales 数组一致
+// 定义 Locale 类型
 type Locale = typeof locales[number];
 
 // 类型守卫函数
@@ -23,23 +23,23 @@ export const metadata: Metadata = {
   description: 'Instantly convert PX to REM for free. Optimize your responsive web design with our accurate CSS unit converter.',
 };
 
-export default async function LocaleLayout({
-  params,
+export default async function RootLayout({
   children,
+  params,
 }: {
-  params: Promise<{ locale: string }>;
   children: React.ReactNode;
+  params?: Promise<{ locale: string }>; // params 为可选，因为根路径没有 locale
 }) {
   try {
-    const { locale: rawLocale } = await params;
-    // 使用类型守卫确保 rawLocale 是 Locale 类型
-    const locale: Locale = isLocale(rawLocale) ? rawLocale : defaultLocale;
-    
-    console.log(`Layout - 原始语言: ${rawLocale}, 解析后语言: ${locale}`);
-    
+    // 如果有 params（即 /[locale] 路径），解析 locale；否则使用 defaultLocale
+    const rawLocale = params ? (await params).locale : undefined;
+    const locale: Locale = rawLocale && isLocale(rawLocale) ? rawLocale : defaultLocale;
+
+    console.log(`Layout - 原始语言: ${rawLocale ?? 'undefined'}, 解析后语言: ${locale}`);
+
     const messages = await getMessages({ locale }).catch((error) => {
       console.error(`无法加载语言 ${locale} 的翻译: ${error.message}`);
-      return import(`../../messages/${defaultLocale}.json`).then((mod) => mod.default);
+      return import(`../messages/${defaultLocale}.json`).then((mod) => mod.default);
     });
 
     // 动态生成 Canonical URL
@@ -64,7 +64,7 @@ export default async function LocaleLayout({
       </html>
     );
   } catch (error) {
-    console.error("Layout 错误:", error);
+    console.error('Layout 错误:', error);
     return (
       <html lang={defaultLocale}>
         <body className={inter.className}>

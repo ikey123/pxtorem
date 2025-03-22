@@ -19,66 +19,79 @@ function isValidCategory(value: string): value is ValidCategory {
 }
 
 type CategoryParams = {
-  params: Promise<{ locale: string; category: string; slug: string }>;
+  params: Promise<{ locale: string; category: string; slug?: string }>;
 };
 
 export async function generateMetadata({
-  params
+  params,
 }: CategoryParams): Promise<Metadata> {
-  const { locale, category } = await params;
-  const effectiveLocale: Locale = isLocale(locale) ? locale : defaultLocale;
+  const { locale, category, slug } = await params;
+  let effectiveLocale: Locale = isLocale(locale) ? locale : defaultLocale;
+  let effectiveCategory = category;
+  let effectiveSlug: string = slug || ''; // 显式声明为 string 并提供默认值
 
-  // 检查是否可能是 slug 误识别为类别
-  if (category.match(/^\d+-px-to-rem$/) || category.match(/^\d+(?:-\d+)?-rem-to-px$/)) {
-    console.warn(`Slug 被误识别为类别 in generateMetadata: ${category}`);
-    return { title: 'Invalid Category', description: 'This is a conversion value, not a category' };
+  if (!isLocale(locale) && isValidCategory(locale)) {
+    effectiveLocale = defaultLocale;
+    effectiveCategory = locale;
+    effectiveSlug = category; // category 是 string
   }
 
-  if (!isValidCategory(category)) {
-    console.warn(`无效的类别 in generateMetadata: ${category}`);
+  console.log(`generateMetadata - 原始: locale=${locale}, category=${category}, slug=${slug || 'undefined'}`);
+  console.log(`generateMetadata - 解析后: effectiveLocale=${effectiveLocale}, effectiveCategory=${effectiveCategory}, effectiveSlug=${effectiveSlug}`);
+
+  if (!isValidCategory(effectiveCategory)) {
+    console.warn(`无效的类别 in generateMetadata: ${effectiveCategory}`);
     return { title: 'Category Not Found', description: 'The requested category does not exist' };
   }
 
   try {
     const t = await getTranslations({ locale: effectiveLocale, namespace: 'Category' });
     return {
-      title: t('metaTitle', { category }),
-      description: t('metaDescription', { category }),
+      title: t('metaTitle', { category: effectiveCategory }),
+      description: t('metaDescription', { category: effectiveCategory }),
     };
   } catch (error) {
     console.error('generateMetadata 错误:', error);
-    return { title: `${category} Converter`, description: `Convert ${category} units` };
+    return { title: `${effectiveCategory} Converter`, description: `Convert ${effectiveCategory} units` };
   }
 }
 
-export default async function CategoryPage({
-  params
-}: CategoryParams) {
+export default async function CategoryPage({ params }: CategoryParams) {
   const { locale, category, slug } = await params;
-  const effectiveLocale: Locale = isLocale(locale) ? locale : defaultLocale;
+  let effectiveLocale: Locale = isLocale(locale) ? locale : defaultLocale;
+  let effectiveCategory = category;
+  let effectiveSlug: string = slug || ''; // 显式声明为 string 并提供默认值
 
-  if (!isValidCategory(category)) notFound();
+  if (!isLocale(locale) && isValidCategory(locale)) {
+    effectiveLocale = defaultLocale;
+    effectiveCategory = locale;
+    effectiveSlug = category; // category 是 string
+  }
 
-  // 提取 initialValue (最小化修改)
-  let initialValue: number = 16; // 默认值，确保安全
-  
-  // 尽可能简单地解析 slug 中的数值
-  if (slug) {
-    const numMatch = slug.match(/^(\d+(?:-\d+)?)/);
+  console.log(`CategoryPage - 原始语言: ${locale}, 类别: ${category}, Slug: ${slug || 'undefined'}, 解析后语言: ${effectiveLocale}`);
+  console.log(`解析后: effectiveLocale=${effectiveLocale}, effectiveCategory=${effectiveCategory}, effectiveSlug=${effectiveSlug}`);
+
+  if (!isValidCategory(effectiveCategory)) {
+    console.warn(`无效的类别: ${effectiveCategory}`);
+    notFound();
+  }
+
+  // 提取 initialValue
+  let initialValue: number = 16;
+  if (effectiveSlug) {
+    const numMatch = effectiveSlug.match(/^(\d+(?:-\d+)?)/);
     if (numMatch) {
       initialValue = parseFloat(numMatch[1].replace('-', '.'));
     }
   }
 
-  // 简单生成 title
-  const title = `${category.toUpperCase()} Converter: ${slug}`;
-
-  // 渲染内容
+  const title = `${effectiveCategory.toUpperCase()} Converter${effectiveSlug ? `: ${effectiveSlug}` : ''}`;
+  console.log(`渲染参数: title=${title}, initialValue=${initialValue}`);
   return (
     <SlugContent
       locale={effectiveLocale}
-      category={category}
-      slug={slug}
+      category={effectiveCategory}
+      slug={effectiveSlug} // 类型已是 string
       title={title}
       initialValue={initialValue}
     />
