@@ -50,7 +50,7 @@ export default async function RootLayout({
     return (
       <html lang={locale} className="scroll-smooth">
         <head>
-          <link rel="canonical" href={canonicalUrl} />
+          <link rel="canonical" href={`https://pxtorem.org${locale === 'en' ? '/' : `/${locale}`}`} />
         </head>
         <body className={inter.className}>
           <NextIntlClientProvider locale={locale} messages={messages}>
