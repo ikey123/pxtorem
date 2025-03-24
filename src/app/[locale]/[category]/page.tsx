@@ -23,9 +23,8 @@ type CategoryParams = {
 export async function generateMetadata({ params }: CategoryParams): Promise<Metadata> {
   const { locale, category } = await params;
   const effectiveLocale: Locale = isLocale(locale) ? locale : defaultLocale;
-  const effectiveCategory = isValidCategory(category) ? category : isValidCategory(locale) ? locale : notFound();
+  const effectiveCategory = isValidCategory(category) ? category : isValidCategory(locale) ? locale : 'rem-to-px';
 
-  console.log(`[Category] Metadata - locale=${locale}, category=${category}`);
   return {
     title: `${effectiveCategory.toUpperCase()} Converter`,
     description: `Convert ${effectiveCategory} units`,

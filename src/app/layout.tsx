@@ -42,15 +42,11 @@ export default async function RootLayout({
       return import(`../messages/${defaultLocale}.json`).then((mod) => mod.default);
     });
 
-    // 动态生成 Canonical URL
-    const canonicalBase = 'https://pxtorem.org';
-    const canonicalPath = locale === defaultLocale ? '' : `/${locale}`;
-    const canonicalUrl = `${canonicalBase}${canonicalPath}`;
-
     return (
       <html lang={locale} className="scroll-smooth">
         <head>
-          <link rel="canonical" href={`https://pxtorem.org${locale === 'en' ? '/' : `/${locale}`}`} />
+          {/* 删除下面这行 */}
+          {/* <link rel="canonical" href={`https://pxtorem.org${locale === 'en' ? '/' : `/${locale}`}`} /> */}
         </head>
         <body className={inter.className}>
           <NextIntlClientProvider locale={locale} messages={messages}>
