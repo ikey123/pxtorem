@@ -35,27 +35,7 @@
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
-  <url>
-    <loc>https://pxtorem.org/en/rem-to-px/1-rem-to-px</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://pxtorem.org/en/rem-to-px/1-rem-to-px"/>
-    <!-- <xhtml:link rel="alternate" hreflang="es" href="https://pxtorem.org/es/rem-to-px/1-rem-to-px"/> -->
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
   
-  <!-- 添加缺失的长尾页 -->
-  <url>
-    <loc>https://pxtorem.org/en/rem-to-px/0-5-rem-to-px</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://pxtorem.org/en/rem-to-px/0-5-rem-to-px"/>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://pxtorem.org/en/rem-to-px/1-5-rem-to-px</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://pxtorem.org/en/rem-to-px/1-5-rem-to-px"/>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
   
   <!-- 其他页面 -->
   <url>

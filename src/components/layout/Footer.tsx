@@ -10,9 +10,9 @@ export default function Footer() {
 
   // 更新热门链接配置
   const popularLinks = [
-    { href: `/${locale}/rem-to-px/1-rem-to-px`, label: t('popularLinksItems.rem1') }, // 1 rem to px
-    { href: `/${locale}/rem-to-px/0-5-rem-to-px`, label: t('popularLinksItems.rem0_5') }, // 0.5 rem to px
-    { href: `/${locale}/rem-to-px/1-5-rem-to-px`, label: t('popularLinksItems.rem1_5') }, // 1.5 rem to px
+   // { href: `/${locale}/rem-to-px/1-rem-to-px`, label: t('popularLinksItems.rem1') }, // 1 rem to px
+   // { href: `/${locale}/rem-to-px/0-5-rem-to-px`, label: t('popularLinksItems.rem0_5') }, // 0.5 rem to px
+   // { href: `/${locale}/rem-to-px/1-5-rem-to-px`, label: t('popularLinksItems.rem1_5') }, // 1.5 rem to px
     { href: `/${locale}/px-to-rem/16-px-to-rem`, label: t('popularLinksItems.px16') }, // 16px to rem
   ];
 
